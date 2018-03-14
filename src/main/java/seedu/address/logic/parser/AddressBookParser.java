@@ -115,7 +115,7 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case RedoCommand.COMMAND_SHORTCUT:
-             return new RedoCommand();
+            return new RedoCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
