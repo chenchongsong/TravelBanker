@@ -827,8 +827,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user | see which contacts owe me money |
 |`* * *` |user | see to which of my contacts do I owe money |
 |`* *` |user | see for which items do I owe a contact / a contact owes me |
-|`* ` |user | select the currency that I am owed |
-|`* ` |user | convert my balance into a different currency |
+|`*` |user | select the currency that I am owed |
+|`*` |user | convert my balance into a different currency |
 |`*` |user | calculate the amount I am owed with an applied interest rate |
 |=======================================================================
 
