@@ -3,6 +3,10 @@ package seedu.address.model.money;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Person's Money Balance in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidMoney(String)}
+ */
 public class Money {
     public static final String MESSAGE_MONEY_CONSTRAINTS = "Money values should be numbers";
     public static final String MONEY_VALIDATION_REGEX = "^(?!0\\.00)\\d{1,3}(,\\d{3})*(\\.\\d\\d)?$";

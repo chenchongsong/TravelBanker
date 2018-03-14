@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.money.Money;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.model.money.Money;
 
 /**
  * Represents a Person in the address book.
