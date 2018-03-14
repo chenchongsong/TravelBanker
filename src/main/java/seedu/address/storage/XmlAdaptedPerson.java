@@ -119,7 +119,7 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        if (!Money.isValidMoney(this.email)) {
+        if (!Money.isValidMoney(this.balance)) {
             throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
         }
         final Money balance = new Money(this.balance);

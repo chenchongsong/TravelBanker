@@ -10,6 +10,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.money.Money;
 
 /**
  * A utility class to help with building Person objects.
@@ -20,12 +21,14 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_BALANCE = "10.00";
     public static final String DEFAULT_TAGS = "friends";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private Money balance;
     private Set<Tag> tags;
 
     public PersonBuilder() {
@@ -33,6 +36,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        balance = new Money(DEFAULT_BALANCE);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
     }
 
@@ -44,12 +48,14 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        balance = personToCopy.getMoney();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
     /**
      * Sets the {@code Name} of the {@code Person} that we are building.
      */
+    
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
         return this;
@@ -86,9 +92,15 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
+    
+    public PersonBuilder withMoney(String balance) {
+        this.balance = new Money(balance);
+        return this;
+    }
+
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, balance, tags);
     }
 
 }
