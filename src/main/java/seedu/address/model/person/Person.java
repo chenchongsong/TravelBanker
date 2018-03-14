@@ -20,7 +20,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
-    private final Money balance;
+    private final Money money;
 
     private final UniqueTagList tags;
 
@@ -33,7 +33,7 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.balance = balance;
+        this.money = balance;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -54,8 +54,8 @@ public class Person {
         return address;
     }
 
-    public Money getBalance() {
-        return balance;
+    public Money getMoney() {
+        return money;
     }
 
     /**
@@ -81,13 +81,13 @@ public class Person {
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
                 && otherPerson.getAddress().equals(this.getAddress())
-                && otherPerson.getBalance().equals(this.getBalance());
+                && otherPerson.getMoney().equals(this.getMoney());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, balance, tags);
+        return Objects.hash(name, phone, email, address, money, tags);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class Person {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" Balance: ")
-                .append(getBalance())
+                .append(getMoney())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
