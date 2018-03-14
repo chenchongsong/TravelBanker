@@ -55,7 +55,6 @@ public class PersonBuilder {
     /**
      * Sets the {@code Name} of the {@code Person} that we are building.
      */
-    
     public PersonBuilder withName(String name) {
         this.name = new Name(name);
         return this;
@@ -92,12 +91,14 @@ public class PersonBuilder {
         this.email = new Email(email);
         return this;
     }
-    
+
+    /**
+     * Sets the {@code balance} of the {@code Person} that we are building.
+     */
     public PersonBuilder withMoney(String balance) {
         this.balance = new Money(balance);
         return this;
     }
-
 
     public Person build() {
         return new Person(name, phone, email, address, balance, tags);
