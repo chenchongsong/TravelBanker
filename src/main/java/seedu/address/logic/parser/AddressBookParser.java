@@ -66,6 +66,9 @@ public class AddressBookParser {
         case SelectCommand.COMMAND_SHORTCUT:
             return new SelectCommandParser().parse(arguments);
 
+        case SplitCommand.COMMAND_SHORTCUT:
+            return new SplitCommandParser().parse(arguments);
+
         case DeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
