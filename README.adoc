@@ -36,15 +36,6 @@ Below is a list of useful links to the relevant documents to get you started.
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
-== Running Tests
-To run the tests for this application, ensure that you are using IntelliJ IDE, and:
-
- [FOR DEVELOPERS]
- 1. Create your own automated tests for your relevant features
- 2. Under "src/", right-click on the "test" folder and select "Run 'All Tests'"
-
- [FOR USERS]
- 1. Under "src/", right-click on the "test" folder and select "Run 'All Tests'"
 
 == Built With
 - IntelliJ IDE - Software Development
