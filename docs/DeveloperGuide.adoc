@@ -423,6 +423,35 @@ this method is not applicable.
 * **Cons**: More difficult to implement and not much value added.
 // end::balancefeature[]
 
+// tag::sortfeature[]
+=== sort Feature
+The sort feature is implemented by the `sortCommand` class, which resides in the `Logic` component.
+When `sortCommand` is executed, it would call the `Model` component (`UniquePersonList`) to sort the person list. To specify the sorting order and the keyword to be sorted, two strings would be passed as parameters.
+In support of different keyword, Class `Name`, `Phone`, `Email`, `Address`, `Money` were add with a `compareTo` method for the creation of comparators.
+
+The sortCommand supports sorting of the filteredList (i.e. list that comes from FindCommand execution).
+
+In the current implementation, the sorted result would not be store in the storage.
+
+Commands that cannot be undone such as sortCommand are implemented like this:
+
+[source,java]
+----
+public class sortCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... sort logic ...
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+}
+----
+
+The following activity diagram summarizes the execution of the `sort` command.
+
+image::SortCommand_Activity_Diagram.png[width="800"]
+
+// end::sortfeature[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
