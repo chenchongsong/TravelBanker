@@ -1,9 +1,7 @@
 package seedu.address.logic.commands;
 
-import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
@@ -19,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.Math.round;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MONEY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -32,15 +31,19 @@ public class SplitCommand extends UndoableCommand {
     public static final String COMMAND_SHORTCUT = "sp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Split a bill evenly among specified people. "
-            + "Parameters: INDEX1 INDEX2 ... "
-            + "[" + PREFIX_MONEY + "MONEY] ";
+            + "Parameters: INDEX1 [INDEX2...] "
+            + PREFIX_MONEY + "MONEY\n"
+            + "Example1: " + COMMAND_WORD + " 1 2 "
+            + PREFIX_MONEY + "200\n"
+            + "Example2: " + COMMAND_SHORTCUT + " 1 2 "
+            + PREFIX_MONEY + "400.00";
 
-    public static final String MESSAGE_SPLIT_BILL_SUCCESS = "Bill Split: ";
+    public static final String MESSAGE_SPLIT_BILL_SUCCESS = "Bill Split Successfully Among Selected People!";
 
     private final ArrayList<Index> indices;
-
     private ArrayList<Person> peopleToEdit;
     private ArrayList<Person> editedPeople;
+    private final double bill;
 
     /**
      * @param indices of people in the filtered person list to settle the bill
@@ -50,6 +53,7 @@ public class SplitCommand extends UndoableCommand {
         this.indices = indices;
         peopleToEdit = new ArrayList<>();
         editedPeople = new ArrayList<>();
+        this.bill = bill;
     }
 
     @Override
@@ -64,7 +68,6 @@ public class SplitCommand extends UndoableCommand {
             throw new AssertionError("The target people cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        // EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
         return new CommandResult(MESSAGE_SPLIT_BILL_SUCCESS);
     }
 
@@ -85,18 +88,31 @@ public class SplitCommand extends UndoableCommand {
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * but with a 0 balance
+     * but with a updated balance
      */
-    private static Person getSettledPerson(Person personToEdit) {
+    private Person getSettledPerson(Person personToEdit) {
         assert personToEdit != null;
 
         Name name = personToEdit.getName();
         Phone phone = personToEdit.getPhone();
         Email email = personToEdit.getEmail();
         Address address = personToEdit.getAddress();
-        Money money = new Money("0");
+        Money money = getSettledMoney(personToEdit.getMoney());
         Set<Tag> tags = personToEdit.getTags();
 
         return new Person(name, phone, email, address, money, tags);
     }
+
+    /**
+     * Create and returns an updated Money Info
+     * The updated Money would be rounded to 2 decimal places
+     */
+    private Money getSettledMoney(Money moneyToEdit) {
+        assert moneyToEdit != null;
+        double updatedBalance = moneyToEdit.toDouble() + bill / indices.size();
+        updatedBalance = round(updatedBalance * 100.00) / 100.00;
+        return new Money(Double.toString(updatedBalance));
+
+    }
+
 }
