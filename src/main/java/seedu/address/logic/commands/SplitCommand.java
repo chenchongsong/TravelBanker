@@ -1,5 +1,9 @@
 package seedu.address.logic.commands;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -12,10 +16,6 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import static java.lang.Math.round;
 import static java.util.Objects.requireNonNull;
@@ -59,7 +59,7 @@ public class SplitCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            for (int i=0; i<indices.size(); i++) {
+            for (int i = 0; i < indices.size(); i++) {
                 model.updatePerson(peopleToEdit.get(i), editedPeople.get(i));
             }
         } catch (DuplicatePersonException dpe) {
