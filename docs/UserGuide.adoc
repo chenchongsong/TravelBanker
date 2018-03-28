@@ -83,27 +83,6 @@ Examples:
 Shows a list of all persons in the accounting book. +
 Format: `list` or `l`
 
-=== Sorting all persons: `sort` or  `so`
-
-Sorts all persons in ascendingly or descendingly, ordering by the specified keywords. +
-Format: `sort KEYWORD_PREFIX/ORDER` +
-Format: `so KEYWORD_PREFIX/ORDER`
-
-Examples:
-
-* `sort n/asc`
-* `so m/desc`
-
-=== Splitting a bill: `split` or  `sp`
-
-Splits a bill among multiple people, specified by their indices. +
-Format: `split INDEX1 [INDEX2...] m/MONEY` +
-Format: `sp INDEX1 [INDEX2...] m/MONEY`
-
-Examples:
-
-* `split 1 2 m/200`
-* `sp 1 2 3 m/400.00`
 
 === Editing a person : `edit` or `e`
 
@@ -127,18 +106,6 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` or `e 2 n/Betsy Crower t/`+
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-
-=== Remove Tags: `removetag` or `rt`
-
-Remove Tags from a specific person in the TravelBanker. +
-Format: `removetag INDEX [t/TAG]...` +
-Format: `rt INDEX [t/TAG]...`
-
-Examples:
-
-* `removetag 1 t/owesMoney t/friends` +
-Remove the tags `owesMoney` and `friends` from the first person.
 
 
 === Locating persons by name: `find` or `f`
@@ -284,35 +251,78 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+
 === Checking overall balance: `balance` or `b` [Since v1.2]
 
 Calculates your total balance. +
 Format: `balance` or `b`
+
+
+=== Remove Tags: `removetag` or `rt` [Since v1.2]
+
+Remove Tags from a specific person in the TravelBanker. +
+Format: `removetag INDEX [t/TAG]...` +
+Format: `rt INDEX [t/TAG]...`
+
+Examples:
+
+* `removetag 1 t/owesMoney t/friends` +
+Remove the tags `owesMoney` and `friends` from the first person.
+
 
 === Seeing which contact owes you the most: `max` or `mx` [Since v1.2]
 
 Lists the contact which owes you the most money. +
 Format: `max`
 
+
 === Seeing which contact owes you the least: `min` or `mi`[Since v1.2]
 
 Lists the contact to which you owe the most money. +
 Format: `min`
+
+
+=== Sorting all persons: `sort` or  `so` [Since v1.2]
+
+Sorts all persons in ascendingly or descendingly, ordering by the specified keywords. +
+Format: `sort KEYWORD_PREFIX/ORDER` +
+Format: `so KEYWORD_PREFIX/ORDER`
+
+Examples:
+
+* `sort n/asc`
+* `so m/desc`
+
+
+=== Splitting a bill: `split` or  `sp` [Since v1.3]
+
+Splits a bill among multiple people, specified by their indices. +
+Format: `split INDEX1 [INDEX2...] m/MONEY` +
+Format: `sp INDEX1 [INDEX2...] m/MONEY`
+
+Examples:
+
+* `split 1 2 m/200`
+* `sp 1 2 3 m/400.00`
+
 
 === Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
 
 Sets the balance of the specified contact to 0. +
 Format: `settle INDEX`
 
+
 === Seeing all the contacts that owe you money: `lent` or `le` [Coming in v2.0]
 
 Lists all the contacts that owe you an amount.
 Format: `lent` or `le`
 
+
 === Seeing all the contacts that owe you money: `debt` or `de` [Coming in v2.0]
 
 Lists all the contacts that owe you an amount.
 Format: `debt` or `de`
+
 
 === Applies an interest rate to your balance: `interest FACTOR` or `i FACTOR` [Coming in v2.0]
 
@@ -326,6 +336,7 @@ Finds the person that owes the user the most money.
 Improves the usability by adding a quick access function for a common use case.
 Format: `biggest-debtor INDEX`
 
+
 === Converts your balance in a desired currency: `currency c/` or `cu c/` [Coming in v2.0]`
 
 Converts your total balance in a currency of your choice.
@@ -337,6 +348,7 @@ Format: `balance c/[CURRENCY]` or `b c/[CURRENCY]`
 Lists the description consisting of keywords that explain why someone owes you an amount.
 This facilitates understanding of the debt.
 Format: `describe INDEX`
+
 
 === Shows on which trip a balance was established from user and contact : `trip [DESTINATION]` or `t` [Coming in v2.0]
 
@@ -371,6 +383,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *RemoveTag* : `removetag INDEX [t/TAG]...`
+* *Sort* : `sort KEYWORD_PREFIX/ORDER`
+* *Split* : `split INDEX1 [INDEX2...] m/MONEY`
 * *Max* : `max`
 * *Min* : `min`
 * *Describe* : `describe INDEX`
