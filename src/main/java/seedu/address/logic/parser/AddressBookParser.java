@@ -26,6 +26,7 @@ import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SettleCommand;
 import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SplitCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -167,6 +168,12 @@ public class AddressBookParser {
 
         case SettleCommand.COMMAND_SHORTCUT:
             return new SettleCommandParser().parse(arguments);
+
+        case SplitCommand.COMMAND_WORD:
+            return new SplitCommandParser().parse(arguments);
+
+        case SplitCommand.COMMAND_SHORTCUT:
+            return new SplitCommandParser().parse(arguments);
 
         case SortCommand.COMMAND_WORD:
             return new SortCommandParser().parse(arguments);
