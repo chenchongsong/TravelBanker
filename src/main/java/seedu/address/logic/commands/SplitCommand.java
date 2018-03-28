@@ -35,7 +35,7 @@ public class SplitCommand extends UndoableCommand {
             + PREFIX_MONEY + "MONEY\n"
             + "Example1: " + COMMAND_WORD + " 1 2 "
             + PREFIX_MONEY + "200\n"
-            + "Example2: " + COMMAND_SHORTCUT + " 1 2 "
+            + "Example2: " + COMMAND_SHORTCUT + " 1 2 3 "
             + PREFIX_MONEY + "400.00";
 
     public static final String MESSAGE_SPLIT_BILL_SUCCESS = "Bill Split Successfully Among Selected People!";

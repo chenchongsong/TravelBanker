@@ -12,7 +12,7 @@ public class SortCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sorts all persons in ascendingly or descendingly, "
             + "ordering by the specified keywords.\n"
-            + "Parameters: KEYWORD_PREFIX+ORDER ...\n"
+            + "Parameters: KEYWORD_PREFIX/ORDER ...\n"
             + "Example1: " + COMMAND_WORD + " n/desc\n"
             + "Example2: " + COMMAND_WORD + " m/asc";
 

@@ -83,16 +83,27 @@ Examples:
 Shows a list of all persons in the accounting book. +
 Format: `list` or `l`
 
-=== Sort all persons: `sort` or  `so`
+=== Sorting all persons: `sort` or  `so`
 
 Sorts all persons in ascendingly or descendingly, ordering by the specified keywords. +
-Format: `sort KEYWORD_PREFIX/ORDER`
+Format: `sort KEYWORD_PREFIX/ORDER` +
 Format: `so KEYWORD_PREFIX/ORDER`
 
 Examples:
 
 * `sort n/asc`
 * `so m/desc`
+
+=== Splitting a bill: `split` or  `sp`
+
+Splits a bill among multiple people, specified by their indices. +
+Format: `split INDEX1 [INDEX2...] m/MONEY` +
+Format: `sp INDEX1 [INDEX2...] m/MONEY`
+
+Examples:
+
+* `split 1 2 m/200`
+* `sp 1 2 3 m/400.00`
 
 === Editing a person : `edit` or `e`
 
@@ -121,7 +132,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 === Remove Tags: `removetag` or `rt`
 
 Remove Tags from a specific person in the TravelBanker. +
-Format: `removetag INDEX [t/TAG]...`
+Format: `removetag INDEX [t/TAG]...` +
 Format: `rt INDEX [t/TAG]...`
 
 Examples:
