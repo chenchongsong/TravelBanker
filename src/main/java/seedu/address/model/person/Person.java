@@ -39,7 +39,7 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags){
+    public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -48,14 +48,14 @@ public class Person {
         this.money = balance;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.items = new UniqueItemList(new HashSet<Item>()); // initialize as empty set
+        this.items = new UniqueItemList(new HashSet<>()); // initialize as empty set
     }
 
     /**
      * Every field must be present and not null.
      * @param items must be provided
      */
-    public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags, Set<Item> items){
+    public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags, Set<Item>items) {
         requireAllNonNull(name, phone, email, address, tags, items);
         this.name = name;
         this.phone = phone;
