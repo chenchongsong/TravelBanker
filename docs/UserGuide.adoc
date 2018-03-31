@@ -411,6 +411,7 @@ e.g.`select 2`
 * *RemoveTag* : `removetag INDEX [t/TAG]...`
 * *Sort* : `sort KEYWORD_PREFIX/ORDER`
 * *Split* : `split INDEX1 [INDEX2...] m/MONEY`
+* *ItemShow* : `itemshow INDEX`
 * *Max* : `max`
 * *Min* : `min`
 * *Describe* : `describe INDEX`
