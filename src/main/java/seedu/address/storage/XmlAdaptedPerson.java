@@ -137,7 +137,7 @@ public class XmlAdaptedPerson {
         final Money balance = new Money(this.balance);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        final Set<Item> items = new HashSet<>(personItems);
+        final ArrayList<Item> items = new ArrayList<>(personItems);
         return new Person(name, phone, email, address, balance, tags, items);
     }
 

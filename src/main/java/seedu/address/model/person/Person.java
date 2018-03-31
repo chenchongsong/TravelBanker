@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -48,14 +49,15 @@ public class Person {
         this.money = balance;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
-        this.items = new UniqueItemList(new HashSet<>()); // initialize as empty set
+        this.items = new UniqueItemList(new ArrayList<>()); // initialize as empty set
     }
 
     /**
      * Every field must be present and not null.
      * @param items must be provided
      */
-    public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags, Set<Item>items) {
+    public Person(Name name, Phone phone, Email email, Address address, Money balance,
+                  Set<Tag> tags, ArrayList<Item>items) {
         requireAllNonNull(name, phone, email, address, tags, items);
         this.name = name;
         this.phone = phone;
@@ -100,8 +102,8 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    public Set<Item> getItems() {
-        return Collections.unmodifiableSet(items.toSet());
+    public ArrayList<Item> getItems() {
+        return items.toArrayList();
     }
 
     public UniqueItemList getUniqueItemList() {

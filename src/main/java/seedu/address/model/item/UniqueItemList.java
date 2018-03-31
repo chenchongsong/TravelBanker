@@ -3,12 +3,10 @@ package seedu.address.model.item;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 
@@ -20,7 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
  */
 public class UniqueItemList implements Iterable<Item> {
 
-    private final ObservableList<Item> internalList = FXCollections.observableArrayList();
+    private ArrayList<Item> internalList = new ArrayList<>();
 
     /**
      * Constructs empty ItemList.
@@ -31,7 +29,7 @@ public class UniqueItemList implements Iterable<Item> {
      * Creates a UniqueItemList using given items.
      * Enforces no nulls.
      */
-    public UniqueItemList(Set<Item> items) {
+    public UniqueItemList(ArrayList<Item> items) {
         requireAllNonNull(items);
         internalList.addAll(items);
 
@@ -39,12 +37,12 @@ public class UniqueItemList implements Iterable<Item> {
     }
 
     /**
-     * Returns all items in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
+     * Returns all items in this list as a ArrayList.
+     * This ArrayList is mutable and change-insulated against the internal list.
      */
-    public Set<Item> toSet() {
+    public ArrayList<Item> toArrayList() {
         assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
+        return new ArrayList<>(internalList);
     }
 
     /**
@@ -61,9 +59,9 @@ public class UniqueItemList implements Iterable<Item> {
     /**
      * Replaces the Items in this list with those in the argument Item list.
      */
-    public void setItems(Set<Item> items) {
-        requireAllNonNull(items);
-        internalList.setAll(items);
+    public void setItems(ArrayList<Item> newItemList) {
+        requireAllNonNull(newItemList);
+        internalList = newItemList;
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 
@@ -71,7 +69,7 @@ public class UniqueItemList implements Iterable<Item> {
      * Ensures every item in the argument list exists in this object.
      */
     public void mergeFrom(UniqueItemList from) {
-        final Set<Item> alreadyInside = this.toSet();
+        final ArrayList<Item> alreadyInside = this.toArrayList();
         from.internalList.stream()
                 .filter(item -> !alreadyInside.contains(item))
                 .forEach(internalList::add);
@@ -106,14 +104,6 @@ public class UniqueItemList implements Iterable<Item> {
     public Iterator<Item> iterator() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.iterator();
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Item> asObservableList() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return FXCollections.unmodifiableObservableList(internalList);
     }
 
     @Override
