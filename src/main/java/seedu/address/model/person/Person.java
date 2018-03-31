@@ -40,7 +40,9 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Money balance, Set<Tag> tags){
-        Set<Item> items = new HashSet<>();
+        Set<Item> items = new HashSet<Item>();
+        items.add(new Item("TaxiFare", "123.00"));
+        items.add(new Item("Unknown", "256.00"));
         requireAllNonNull(name, phone, email, address, tags, items);
         this.name = name;
         this.phone = phone;
@@ -85,12 +87,8 @@ public class Person {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    /**
-     * Returns an immutable item set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Item> getItems() {
-        return Collections.unmodifiableSet(items.toSet());
+    public UniqueItemList getItems() {
+        return items;
     }
 
     @Override

@@ -48,6 +48,17 @@ public class UniqueItemList implements Iterable<Item> {
     }
 
     /**
+     * Returns all items in this list as a String.
+     */
+    public String toString() {
+        assert CollectionUtil.elementsAreUnique(internalList);
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Items: ");
+        internalList.forEach(builder::append);
+        return builder.toString();
+    }
+
+    /**
      * Replaces the Items in this list with those in the argument Item list.
      */
     public void setItems(Set<Item> items) {

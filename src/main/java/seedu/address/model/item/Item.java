@@ -5,30 +5,32 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Item in the TravelBanker.
- * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
+ * Guarantees: immutable; name is valid as declared in {@link #isValidItemName(String)}
  */
 public class Item {
 
     public static final String MESSAGE_ITEM_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String ITEM_VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public final String itemName;
+    private final String itemName;
+    private final String value;
 
     /**
      * Constructs a {@code Item}.
      *
      * @param itemName A valid item name.
      */
-    public Item(String itemName) {
+    public Item(String itemName, String value) {
         requireNonNull(itemName);
-        checkArgument(isValidTagName(itemName), MESSAGE_ITEM_CONSTRAINTS);
+        checkArgument(isValidItemName(itemName), MESSAGE_ITEM_CONSTRAINTS);
         this.itemName = itemName;
+        this.value = value;
     }
 
     /**
      * Returns true if a given string is a valid item name.
      */
-    public static boolean isValidTagName(String test) {
+    public static boolean isValidItemName(String test) {
         return test.matches(ITEM_VALIDATION_REGEX);
     }
 
@@ -48,7 +50,7 @@ public class Item {
      * Format state as text for viewing.
      */
     public String toString() {
-        return '[' + itemName + ']';
+        return "\n[" + itemName + "] : " + value;
     }
 
 }
