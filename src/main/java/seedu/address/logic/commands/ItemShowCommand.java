@@ -20,11 +20,11 @@ public class ItemShowCommand extends Command {
     public static final String COMMAND_SHORTCUT = "is";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+            + ": Show all items related to a person (specified by INDEX).\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Showed Items for Person: %1$s.\n";
+    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Items Showed for Person: %1$s.\n";
 
     private final Index targetIndex;
 

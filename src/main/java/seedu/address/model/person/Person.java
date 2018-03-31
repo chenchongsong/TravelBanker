@@ -49,7 +49,6 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.items = new UniqueItemList(new HashSet<Item>()); // initialize as empty set
-        System.out.println("IN old constructor");
     }
 
     /**
@@ -66,7 +65,6 @@ public class Person {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.items = new UniqueItemList(items);
-        System.out.println("IN new constructor");
     }
 
     public Name getName() {
