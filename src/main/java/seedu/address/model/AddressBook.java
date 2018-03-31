@@ -137,7 +137,8 @@ public class AddressBook implements ReadOnlyAddressBook {
                 person.getEmail(),
                 person.getAddress(),
                 person.getMoney(),
-                correctTagReferences);
+                correctTagReferences,
+                person.getItems());
     }
 
     /**

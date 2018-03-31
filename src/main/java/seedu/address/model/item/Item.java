@@ -13,18 +13,18 @@ public class Item {
     public static final String ITEM_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String itemName;
-    private final String value;
+    private final String itemValue;
 
     /**
      * Constructs a {@code Item}.
      *
      * @param itemName A valid item name.
      */
-    public Item(String itemName, String value) {
+    public Item(String itemName, String itemValue) {
         requireNonNull(itemName);
         checkArgument(isValidItemName(itemName), MESSAGE_ITEM_CONSTRAINTS);
         this.itemName = itemName;
-        this.value = value;
+        this.itemValue = itemValue;
     }
 
     /**
@@ -50,7 +50,15 @@ public class Item {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "\n[" + itemName + "] : " + value;
+        return "\n[" + itemName + "] : " + itemValue;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public String getItemValue() {
+        return itemValue;
     }
 
 }

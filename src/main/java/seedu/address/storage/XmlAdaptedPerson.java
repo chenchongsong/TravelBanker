@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.item.Item;
 import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -37,6 +38,8 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    @XmlElement
+    private List<XmlAdaptedItem> items = new ArrayList<>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -74,6 +77,10 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        items = new ArrayList<>();
+        for (Item item : source.getItems()) {
+            items.add(new XmlAdaptedItem(item));
+        }
     }
 
     /**
@@ -85,6 +92,11 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Item> personItems = new ArrayList<>();
+        for (XmlAdaptedItem item : items) {
+            personItems.add(item.toModelType());
         }
 
         if (this.name == null) {
@@ -125,7 +137,8 @@ public class XmlAdaptedPerson {
         final Money balance = new Money(this.balance);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, balance, tags);
+        final Set<Item> items = new HashSet<>(personItems);
+        return new Person(name, phone, email, address, balance, tags, items);
     }
 
     @Override

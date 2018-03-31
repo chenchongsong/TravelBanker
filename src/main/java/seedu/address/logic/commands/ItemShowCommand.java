@@ -41,7 +41,7 @@ public class ItemShowCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        UniqueItemList items = lastShownList.get(targetIndex.getZeroBased()).getItems();
+        UniqueItemList items = lastShownList.get(targetIndex.getZeroBased()).getUniqueItemList();
         return new CommandResult(getResultString(items));
     }
 
