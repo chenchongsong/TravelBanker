@@ -85,7 +85,6 @@ public class SplitCommand extends UndoableCommand {
         }
     }
 
-
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * but with a updated balance
@@ -109,8 +108,11 @@ public class SplitCommand extends UndoableCommand {
      */
     private Money getSettledMoney(Money moneyToEdit) {
         assert moneyToEdit != null;
+        System.out.println(moneyToEdit.toDouble());
         double updatedBalance = moneyToEdit.toDouble() + bill / indices.size();
         updatedBalance = round(updatedBalance * 100.00) / 100.00;
+        System.out.println("updated");
+        System.out.println(updatedBalance);
         return new Money(Double.toString(updatedBalance));
 
     }

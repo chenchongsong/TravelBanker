@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -82,8 +83,12 @@ public class RemoveTagCommand extends UndoableCommand {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        try {
+            personToEdit = lastShownList.get(index.getZeroBased());
+            editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        } catch(IllegalArgumentException iae) {
+            throw new CommandException(MESSAGE_TAG_NOT_EXIST);
+        }
     }
 
     /**
@@ -91,7 +96,7 @@ public class RemoveTagCommand extends UndoableCommand {
      * Remove all tags within {@code editPersonDescriptor} from the original tag list of personToEdit
      */
     private static Person createEditedPerson(
-            Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
+            Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws IllegalArgumentException {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
@@ -102,9 +107,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
         Set<Tag> toBeRemovedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Tag> originalTags = personToEdit.getTags();
-        if (!allTagsExistOriginally(toBeRemovedTags, originalTags)) {
-            throw new CommandException(MESSAGE_TAG_NOT_EXIST);
-        }
+        checkArgument(allTagsExistOriginally(toBeRemovedTags, originalTags), MESSAGE_TAG_NOT_EXIST);
 
         Set<Tag> updatedTags = getUpdatedTags(toBeRemovedTags, originalTags);
 
