@@ -8,9 +8,11 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.money.Money;
 import seedu.address.model.person.Address;
@@ -39,6 +41,7 @@ public class SplitCommand extends UndoableCommand {
             + PREFIX_MONEY + "400.00";
 
     public static final String MESSAGE_SPLIT_BILL_SUCCESS = "Bill Split Successfully Among Selected People!";
+    public static final String MESSAGE_DUPLICATE_INDEX = "Duplicate Indices Found in Parameters!";
 
     private final ArrayList<Index> indices;
     private ArrayList<Person> peopleToEdit;
@@ -73,6 +76,13 @@ public class SplitCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+
+        if (!CollectionUtil.elementsAreUnique(indices.stream()
+                .map(Index->Index.getZeroBased())
+                .collect(Collectors.toList()))) {
+            throw new CommandException(MESSAGE_DUPLICATE_INDEX);
+        }
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         for (Index index : indices) {
@@ -108,13 +118,9 @@ public class SplitCommand extends UndoableCommand {
      */
     private Money getSettledMoney(Money moneyToEdit) {
         assert moneyToEdit != null;
-        System.out.println(moneyToEdit.toDouble());
         double updatedBalance = moneyToEdit.toDouble() + bill / indices.size();
         updatedBalance = round(updatedBalance * 100.00) / 100.00;
-        System.out.println("updated");
-        System.out.println(updatedBalance);
         return new Money(Double.toString(updatedBalance));
-
     }
 
 }

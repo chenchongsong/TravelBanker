@@ -21,7 +21,6 @@ public class Money {
      */
     public Money(String balance) {
         requireNonNull(balance);
-        System.out.println(balance);
         checkArgument(isValidMoney(balance), MESSAGE_MONEY_CONSTRAINTS);
         this.balance = Double.parseDouble(balance);
         this.value = balance;
