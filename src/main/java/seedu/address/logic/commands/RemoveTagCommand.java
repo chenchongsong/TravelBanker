@@ -40,7 +40,6 @@ public class RemoveTagCommand extends UndoableCommand {
             + PREFIX_TAG + "friends";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Remove Tags for Person: %1$s";
-    // public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_TAG_NOT_EXIST = "Certain Tag not Exits!";
 
@@ -95,11 +94,11 @@ public class RemoveTagCommand extends UndoableCommand {
             Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Money updatedMoney = editPersonDescriptor.getMoney().orElse(personToEdit.getMoney());
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Address updatedAddress = personToEdit.getAddress();
+        Money updatedMoney = personToEdit.getMoney();
 
         Set<Tag> toBeRemovedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Tag> originalTags = personToEdit.getTags();

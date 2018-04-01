@@ -44,10 +44,6 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-//        if (!editPersonDescriptor.isAnyFieldEdited()) {
-//            throw new ParseException(RemoveTagCommand.MESSAGE_NOT_EDITED);
-//        }
-
         return new RemoveTagCommand(index, editPersonDescriptor);
     }
 
