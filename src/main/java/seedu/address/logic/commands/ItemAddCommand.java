@@ -40,6 +40,7 @@ public class ItemAddCommand extends UndoableCommand {
             + PREFIX_MONEY + "30\n";
 
     public static final String MESSAGE_ADD_ITEM_SUCCESS = "Items Added for Person %1$s.\n";
+    public static final String MESSAGE_INVALID_ARGUMENT = "The Argument is Invalid!";
 
     private final Index targetIndex;
     private final Item item;

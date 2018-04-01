@@ -9,6 +9,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ItemAddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import sun.tools.jstat.ParserException;
 
 
 /**
@@ -36,8 +37,14 @@ public class ItemAddCommandParser implements Parser<ItemAddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
         }
 
-        return new ItemAddCommand(index,
-                argMultimap.getValue(PREFIX_NAME).get(), argMultimap.getValue(PREFIX_MONEY).get());
+        try {
+            return new ItemAddCommand(index,
+                    argMultimap.getValue(PREFIX_NAME).get(), argMultimap.getValue(PREFIX_MONEY).get());
+        } catch (IllegalArgumentException iae) {
+            throw new ParseException(ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
+        }
+
+
     }
 
 }

@@ -46,7 +46,10 @@ public class XmlAdaptedItem {
      */
     public Item toModelType() throws IllegalValueException {
         if (!Item.isValidItemName(name)) {
-            throw new IllegalValueException(Item.MESSAGE_ITEM_CONSTRAINTS);
+            throw new IllegalValueException(Item.MESSAGE_ITEMNAME_CONSTRAINTS);
+        }
+        if (!Item.isValidItemValue(value)) {
+            throw new IllegalValueException(Item.MESSAGE_ITEMVALUE_CONSTRAINTS);
         }
         return new Item(name, value);
     }
