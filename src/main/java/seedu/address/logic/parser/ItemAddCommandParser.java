@@ -9,8 +9,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ItemAddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import sun.tools.jstat.ParserException;
-
 
 /**
  * Parses input arguments and creates a new ItemAddCommand object
