@@ -16,8 +16,6 @@ import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.tag.Tag;
 
-
-
 /**
  * Parses input arguments and creates a new RemoveTagCommand object
  */
@@ -46,9 +44,9 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
             throw new ParseException(ive.getMessage(), ive);
         }
 
-        if (!editPersonDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(RemoveTagCommand.MESSAGE_NOT_EDITED);
-        }
+//        if (!editPersonDescriptor.isAnyFieldEdited()) {
+//            throw new ParseException(RemoveTagCommand.MESSAGE_NOT_EDITED);
+//        }
 
         return new RemoveTagCommand(index, editPersonDescriptor);
     }

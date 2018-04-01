@@ -40,8 +40,9 @@ public class RemoveTagCommand extends UndoableCommand {
             + PREFIX_TAG + "friends";
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Remove Tags for Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    // public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_TAG_NOT_EXIST = "Certain Tag not Exits!";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -90,7 +91,8 @@ public class RemoveTagCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * Remove all tags within {@code editPersonDescriptor} from the original tag list of personToEdit
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(
+            Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -99,16 +101,40 @@ public class RemoveTagCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Money updatedMoney = editPersonDescriptor.getMoney().orElse(personToEdit.getMoney());
 
-        Set<Tag> tempTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        HashSet<Tag> updatedTags = new HashSet<Tag>();
+        Set<Tag> toBeRemovedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> originalTags = personToEdit.getTags();
+        if (!allTagsExistOriginally(toBeRemovedTags, originalTags)) {
+            throw new CommandException(MESSAGE_TAG_NOT_EXIST);
+        }
 
-        for (Tag t: personToEdit.getTags()) {
-            if (!tempTags.contains(t)) {
+        Set<Tag> updatedTags = getUpdatedTags(toBeRemovedTags, originalTags);
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMoney, updatedTags);
+    }
+
+    private static Set<Tag> getUpdatedTags(Set<Tag> toBeRemovedTags, Set<Tag> originalTags) {
+        Set<Tag> updatedTags = new HashSet<>();
+        for (Tag t: originalTags) {
+            if (!toBeRemovedTags.contains(t)) {
                 updatedTags.add(t);
             }
         }
+        return updatedTags;
+    }
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMoney, updatedTags);
+    /**
+     * make sure all tags originally exist in the person info
+     * @param toBeRemovedTags
+     * @param originalTags
+     * @return
+     */
+    private static boolean allTagsExistOriginally(Set<Tag> toBeRemovedTags, Set<Tag> originalTags) {
+        for (Tag tag: toBeRemovedTags) {
+            if (!originalTags.contains(tag)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
@@ -117,12 +143,10 @@ public class RemoveTagCommand extends UndoableCommand {
         if (other == this) {
             return true;
         }
-
         // instanceof handles nulls
         if (!(other instanceof RemoveTagCommand)) {
             return false;
         }
-
         // state check
         RemoveTagCommand e = (RemoveTagCommand) other;
         return index.equals(e.index)
