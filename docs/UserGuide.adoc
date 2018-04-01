@@ -336,6 +336,10 @@ Shows item related to the 1st person in the results of the `find` command.
 Sets the balance of the specified contact to 0. +
 Format: `settle INDEX`
 
+=== Remind a contact to pay their balance: `remind` or `rm`[Since v1.4]
+
+Opens the default email client with a generated email to the contact with the balance in the message.
+Format: `remind INDEX`
 
 === Seeing all the contacts that owe you money: `lent` or `le` [Coming in v2.0]
 

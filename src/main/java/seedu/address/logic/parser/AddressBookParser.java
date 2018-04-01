@@ -25,6 +25,7 @@ import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.MaxCommand;
 import seedu.address.logic.commands.MinCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RemindCommand;
 import seedu.address.logic.commands.RemoveTagCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SettleCommand;
@@ -206,6 +207,13 @@ public class AddressBookParser {
             return new MapCommand();
         case MapCommand.COMMAND_SHORTCUT:
             return new MapCommand();
+
+        //@@author pkuhanan
+        case RemindCommand.COMMAND_WORD:
+            return new RemindCommandParser().parse(arguments);
+        case RemindCommand.COMMAND_SHORTCUT:
+            return new RemindCommandParser().parse(arguments);
+        //@@author
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
