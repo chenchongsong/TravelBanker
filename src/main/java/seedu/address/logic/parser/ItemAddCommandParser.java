@@ -41,8 +41,6 @@ public class ItemAddCommandParser implements Parser<ItemAddCommand> {
         } catch (IllegalArgumentException iae) {
             throw new ParseException(ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
         }
-
-
     }
 
 }

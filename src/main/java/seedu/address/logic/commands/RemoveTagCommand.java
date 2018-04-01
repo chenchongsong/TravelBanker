@@ -86,7 +86,7 @@ public class RemoveTagCommand extends UndoableCommand {
         try {
             personToEdit = lastShownList.get(index.getZeroBased());
             editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        } catch(IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             throw new CommandException(MESSAGE_TAG_NOT_EXIST);
         }
     }

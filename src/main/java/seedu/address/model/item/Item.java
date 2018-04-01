@@ -34,7 +34,7 @@ public class Item {
      * Returns true if a given string is a valid item name.
      */
     public static boolean isValidItemName(String test) {
-            return test.matches(ITEM_NAME_VALIDATION_REGEX);
+        return test.matches(ITEM_NAME_VALIDATION_REGEX);
     }
 
     /**
