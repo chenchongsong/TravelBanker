@@ -95,8 +95,8 @@ public class RemoveTagCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * Remove all tags within {@code editPersonDescriptor} from the original tag list of personToEdit
      */
-    private static Person createEditedPerson(
-            Person personToEdit, EditPersonDescriptor editPersonDescriptor) throws IllegalArgumentException {
+    public static Person createEditedPerson(
+            Person personToEdit, EditPersonDescriptor toBeRemovedTagsDescriptor) throws IllegalArgumentException {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
@@ -105,7 +105,7 @@ public class RemoveTagCommand extends UndoableCommand {
         Address updatedAddress = personToEdit.getAddress();
         Money updatedMoney = personToEdit.getMoney();
 
-        Set<Tag> toBeRemovedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> toBeRemovedTags = toBeRemovedTagsDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Tag> originalTags = personToEdit.getTags();
         checkArgument(allTagsExistOriginally(toBeRemovedTags, originalTags), MESSAGE_TAG_NOT_EXIST);
 
@@ -114,7 +114,7 @@ public class RemoveTagCommand extends UndoableCommand {
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMoney, updatedTags);
     }
 
-    private static Set<Tag> getUpdatedTags(Set<Tag> toBeRemovedTags, Set<Tag> originalTags) {
+    public static Set<Tag> getUpdatedTags(Set<Tag> toBeRemovedTags, Set<Tag> originalTags) {
         Set<Tag> updatedTags = new HashSet<>();
         for (Tag t: originalTags) {
             if (!toBeRemovedTags.contains(t)) {

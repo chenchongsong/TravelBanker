@@ -109,6 +109,10 @@ public class Person {
         return items;
     }
 
+    public void setItems(ArrayList<Item> items) {
+        this.items.setItems(items);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {

@@ -61,7 +61,7 @@ public class UniqueItemList implements Iterable<Item> {
      */
     public void setItems(ArrayList<Item> newItemList) {
         requireAllNonNull(newItemList);
-        internalList = newItemList;
+        internalList = new ArrayList<>(newItemList);
         assert CollectionUtil.elementsAreUnique(internalList);
     }
 

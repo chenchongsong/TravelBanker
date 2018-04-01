@@ -11,10 +11,12 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.RemoveTagCommand.createEditedPerson;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.util.HashSet;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -39,15 +41,22 @@ public class RemoveTagCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person withOnlyTagsPerson = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(withOnlyTagsPerson).build();
+        Person personToEdit = model.getFilteredPersonList().get(0);
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(personToEdit).build();
         RemoveTagCommand removeTagCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
-        Person tagRemovedPerson = new PersonBuilder().withoutTags().build();
+        Person tagRemovedPerson = new Person(
+                personToEdit.getName(),
+                personToEdit.getPhone(),
+                personToEdit.getEmail(),
+                personToEdit.getAddress(),
+                personToEdit.getMoney(),
+                new HashSet<>()
+        );
         String expectedMessage = String.format(RemoveTagCommand.MESSAGE_REMOVE_TAG_SUCCESS, tagRemovedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), tagRemovedPerson);
+        expectedModel.updatePerson(personToEdit, tagRemovedPerson);
 
         assertCommandSuccess(removeTagCommand, model, expectedMessage, expectedModel);
     }
@@ -111,9 +120,14 @@ public class RemoveTagCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person editedPerson = new PersonBuilder().build();
+
         Person personToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(personToEdit).build();
+        // descriptor contains all tags to be removed
+
+        Person tagRemovedPerson = createEditedPerson(personToEdit, descriptor);
+
         RemoveTagCommand removeTagCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -124,17 +138,20 @@ public class RemoveTagCommandTest {
         // undo -> reverts addressbook back to previous state and filtered person list to show all persons
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person edited again
-        expectedModel.updatePerson(personToEdit, editedPerson);
+        // redo -> same first person's tag removed again
+        expectedModel.updatePerson(personToEdit, tagRemovedPerson);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() throws Exception {
-        final RemoveTagCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, DESC_AMY);
+        Person personToEdit = model.getFilteredPersonList().get(0);
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(personToEdit).build();
+
+        final RemoveTagCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
         // same values -> returns true
-        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
+        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(descriptor);
         RemoveTagCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
