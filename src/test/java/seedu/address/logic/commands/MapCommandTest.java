@@ -23,7 +23,7 @@ import seedu.address.ui.GuiUnitTest;
 
 
 
-
+//@@author Articho28
 public class MapCommandTest extends GuiUnitTest {
 
     private BrowserPanel browserPanel;

@@ -152,7 +152,7 @@ Deletes the 1st person in the results of the `find` command.
 
 === Selecting a person : `select` or `s`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the last person listing and address displayed. +
 Format: `select INDEX` or `s INDEX`
 
 ****
@@ -311,7 +311,7 @@ Wipes everyone's balances to 0.0 +
 Format: `wipe` +
 Format: `w`
 
-=== Showing items related to a person : `itemshow` or `is`
+=== Showing items related to a person : `itemshow` or `is` [Since v1.4]
 
 Show all items related to a person (specified by INDEX). +
 Format: `itemshow INDEX` or `is INDEX`
@@ -331,7 +331,7 @@ Shows items related to the 2nd person in the accounting book.
 Shows item related to the 1st person in the results of the `find` command.
 
 
-=== Add a New Item : `itemadd` or `ia`
+=== Add a New Item : `itemadd` or `ia` [Since v1.4]
 
 Attaching a new item to a specified person. +
 Format: `itemadd INDEX n/ITEM_NAME m/MONEY` or `ia INDEX n/ITEM_NAME m/MONEY`
@@ -356,10 +356,15 @@ Format: `settle INDEX`
 Opens the default email client with a generated email to the contact with the balance in the message.
 Format: `remind INDEX`
 
-=== Converts your balance in a desired currency: `convert` or `cv` [Coming in v2.0]`
+=== View a contact's address on the map with `select` [Since v1.4]
+
+Searches for the contact's address in the map display once that contact is selected.
+Format : `select INDEX`
+
+=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]`
 
 Converts an entries certain balance in a currency of your choice.
-Format: `convert/cv INDEX FROM_CURRENCY TO_CURRENCY`
+Format: `convert` INDEX FROM_CURRENCY TO_CURRENCY` or `cv` INDEX FROM_CURRENCY TO_CURRENCY
 
 Example: `convert 2 USD JPY`
 Example: `convert 1 SGD USD`
@@ -370,7 +375,7 @@ Lists all the contacts that owe you an amount.
 Format: `lent` or `le`
 
 
-=== Seeing all the contacts that owe you money: `debt` or `de` [Coming in v2.0]
+=== Seeing all the contacts that owe you money: `debt` or `de` [Since v1.2]
 
 Lists all the contacts that owe you an amount.
 Format: `debt` or `de`
@@ -384,13 +389,6 @@ _{explain how the user can enable/disable data encryption}_
 
 Displays your balance with an applied interest rate.
 Format: `interest FACTOR` or `i FACTOR`
-
-
-=== Identifies the person that owes the user the most money: `biggest-debtor` or `bd` [Since v1.2]
-
-Finds the person that owes the user the most money.
-Improves the usability by adding a quick access function for a common use case.
-Format: `biggest-debtor INDEX`
 
 === Lists a description of the debts someone owes you: `describe` or `db` [Coming in v2.0]
 

@@ -7,7 +7,7 @@ import seedu.address.commons.core.index.Index;
 
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.person.Person;
-
+//@@author Articho28
 /**
  * Finds the person to which you owe the most money
  */
