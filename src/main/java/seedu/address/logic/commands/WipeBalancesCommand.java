@@ -27,6 +27,7 @@ public class WipeBalancesCommand extends Command {
             for (Person p : model.getFilteredPersonList()) {
                 oldPerson = p;
                 p.setMoney(cleared);
+                p.clearItems();
                 model.updatePerson(oldPerson, p);
             }
         } catch (DuplicatePersonException dpe) {

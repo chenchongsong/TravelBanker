@@ -9,11 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import seedu.address.model.item.Item;
 import seedu.address.model.item.UniqueItemList;
@@ -114,6 +110,10 @@ public class Person {
 
     public void setItems(ArrayList<Item> items) {
         this.items.setItems(items);
+    }
+
+    public void clearItems() {
+        this.items.setItems(new ArrayList<>());
     }
 
     @Override
