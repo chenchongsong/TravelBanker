@@ -544,7 +544,7 @@ public class XmlAdaptedPerson {
 }
 ----
 
-Here is the new `XmlAdaptedItem` class 
+Here is the new `XmlAdaptedItem` class:
 
 [source,java]
 ----
