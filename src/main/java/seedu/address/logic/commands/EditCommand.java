@@ -115,7 +115,14 @@ public class EditCommand extends UndoableCommand {
         Money updatedMoney = editPersonDescriptor.getMoney().orElse(personToEdit.getMoney());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedMoney, updatedTags);
+        return new Person(
+                updatedName,
+                updatedPhone,
+                updatedEmail,
+                updatedAddress,
+                updatedMoney,
+                updatedTags,
+                personToEdit.getItems());
     }
 
     @Override

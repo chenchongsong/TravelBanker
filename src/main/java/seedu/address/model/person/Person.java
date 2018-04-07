@@ -92,6 +92,7 @@ public class Person {
         this.money = money;
     }
 
+    //@@author chenchongsong
     /**
      * Returns the amount of money due to unknown reasons/items
      * @return
@@ -123,6 +124,7 @@ public class Person {
     public void clearItems() {
         this.items.setItems(new ArrayList<>());
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
