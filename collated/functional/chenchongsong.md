@@ -1434,3 +1434,20 @@ public class XmlAdaptedItem {
 
 }
 ```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
+``` java
+    @XmlElement
+    private List<XmlAdaptedItem> items = new ArrayList<>();
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
+``` java
+        final List<Item> personItems = new ArrayList<>();
+        for (XmlAdaptedItem item : items) {
+            personItems.add(item.toModelType());
+        }
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
+``` java
+        final ArrayList<Item> items = new ArrayList<>(personItems);
+        return new Person(name, phone, email, address, balance, tags, items);
+```

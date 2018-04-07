@@ -1,20 +1,34 @@
 # Articho28
-###### /java/seedu/address/ui/BrowserPanelTest.java
+###### /java/seedu/address/logic/commands/BalanceCommandTest.java
 ``` java
-    @Test
-    public void display() throws Exception {
-        // default web page
-        URL expectedDefaultPageUrl = new URL(BrowserPanel.ATM_SEARCH_PAGE_URL);
-        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+public class BalanceCommandTest {
 
-        // associated web page of a person
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(BrowserPanel.ADDRESS_SEARCH_PAGE_URL
-                +  BOB.getAddress().value.replaceAll(" ", "%20"));
+    private Model model;
+    private Model expectedModel;
+    private BalanceCommand balanceCommand;
+    private double balance;
 
-        waitUntilBrowserLoaded(browserPanelHandle);
-        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        balanceCommand = new BalanceCommand();
+        balanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        balance = balanceCommand.getBalanceFromTravelBanker();
     }
+
+    @Test
+    public void executes_getsOverallBalanceSuccess() {
+        assertCommandSuccess(balanceCommand, model,  BalanceCommand.MESSAGE_SUCCESS
+                + "\n" + "Your balance is "
+                + BalanceCommand.getFormatTwoDecimalPlaces().format(balance)
+                + ".", expectedModel);
+    }
+
+
+
+
 }
 ```
 ###### /java/seedu/address/logic/commands/MapCommandTest.java
@@ -57,35 +71,21 @@ public class MapCommandTest extends GuiUnitTest {
 
 }
 ```
-###### /java/seedu/address/logic/commands/BalanceCommandTest.java
+###### /java/seedu/address/ui/BrowserPanelTest.java
 ``` java
-public class BalanceCommandTest {
-
-    private Model model;
-    private Model expectedModel;
-    private BalanceCommand balanceCommand;
-    private double balance;
-
-
-    @Before
-    public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        balanceCommand = new BalanceCommand();
-        balanceCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        balance = balanceCommand.getBalanceFromTravelBanker();
-    }
-
     @Test
-    public void executes_getsOverallBalanceSuccess() {
-        assertCommandSuccess(balanceCommand, model,  BalanceCommand.MESSAGE_SUCCESS
-                + "\n" + "Your balance is "
-                + BalanceCommand.getFormatTwoDecimalPlaces().format(balance)
-                + ".", expectedModel);
+    public void display() throws Exception {
+        // default web page
+        URL expectedDefaultPageUrl = new URL(BrowserPanel.ATM_SEARCH_PAGE_URL);
+        assertEquals(expectedDefaultPageUrl, browserPanelHandle.getLoadedUrl());
+
+        // associated web page of a person
+        postNow(selectionChangedEventStub);
+        URL expectedPersonUrl = new URL(BrowserPanel.ADDRESS_SEARCH_PAGE_URL
+                +  BOB.getAddress().value.replaceAll(" ", "%20"));
+
+        waitUntilBrowserLoaded(browserPanelHandle);
+        assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
-
-
-
-
 }
 ```
