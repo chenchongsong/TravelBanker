@@ -462,6 +462,105 @@ this method is not applicable.
 * **Cons**: More difficult to implement and not much value added.
 // end::balancefeature[]
 
+// tag::itemfield[]
+=== Add/Delete/Show Item Field
+
+==== Current Implementation
+
+The implementation of the item field touches three components: Model, Logic, and Storage.
+
+===== Model
+
+For Model component, `Person` class was modified and added with exactly one `UniqueItemList`, where each `UniqueItemList` consists of multiple `Item`s. For each `Item`, it has two strings as private attributes, namely the `ItemName` ()
+
+A partial class diagram of the models can be seen below:
+
+image::itemDiagram.png[width="800"]
+
+The `isValidName` and `isValidValue` methods are used to make sure that the user input conforms to the regex for a name and a floating point number:
+
+===== Logic
+
+In the Logic component, three new command, `ItemShowCommand` `ItemAddCommand` `ItemDeleteCommand`, have been added.
+`ItemAddCommand` and `ItemDeleteCommand` are undoable, because these two commands are implemented by replacing the old person in the `ModelManager` with a newly modified person.
+
+[source,java]
+----
+    model.updatePerson(personToEdit, editedPerson);
+----
+
+[NOTE]
+In ItemAddCommand, `editedPerson` is created from personToEdit with a newly added item.
+In ItemDeleteCommand, however, `editedPerson` is created from personToEdit by deleting a specific item.
+
+===== Storage
+
+Storage was also changed in the development of this feature, as new XML elements had to be stored and parsed using the xml storage system.
+
+The three types of new XML elements are `<items>` `<name>` and `<value>`, and they are organised as following:
+
+[source,xml]
+----
+    <persons>
+        <name>John Doe</name>
+        <phone>98765432</phone>
+        ......
+        <items>
+            <name>taxi fare</name>
+            <value>10.5</value>
+        </items>
+        <items>
+            <name>his treat in PizzaHut</name>
+            <value>23.0</value>
+        </items>
+    </persons>
+----
+
+To conform to the required changes, the `XmlAdaptedPerson` class is modified. Additionally, a new class `XmlAdaptedItem` is created .
+
+The new `XmlAdaptedPerson` class is as follows:
+
+[source,java]
+----
+public class XmlAdaptedPerson {
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
+    private String phone;
+    @XmlElement(required = true)
+    private String email;
+    @XmlElement(required = true)
+    private String address;
+    @XmlElement
+    private String balance;
+    @XmlElement
+    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+
+
+    @XmlElement
+    private List<XmlAdaptedItem> items = new ArrayList<>();
+
+    ......
+}
+----
+
+Here is the new `XmlAdaptedItem` class 
+
+[source,java]
+----
+public class XmlAdaptedItem {
+
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
+    private String value;
+
+    ......
+}
+----
+
+// end::itemfield[]
+
 // tag::sortfeature[]
 === sort Feature
 The sort feature is implemented by the `sortCommand` class, which resides in the `Logic` component.
@@ -1129,6 +1228,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user | see for which items/reasons do I owe a contact / a contact owes me |
 
+|`* *` |user | add an item/reason under a specified person |
+
+|`* *` |user | delete an item/reason from a specified person |
+
 |`*` |user | choose the balance the currency that I am owed |
 
 |`*` |user | convert my balance into a different currency |
@@ -1136,6 +1239,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user | calculate the amount I am owed/I owe with an applied interest rate |
 
 | `* * *` |user | have a map functionality | find the nearest ATM to settle my accounts
+
+|`*` |user | sort the contact list according to my wishes |
+
+|`*` |user | split a bill evenly among multiple peple |
+
+|`*` |user | remove certain tags from a person |
 
 |=======================================================================
 

@@ -40,8 +40,10 @@ public class XmlAdaptedPerson {
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    //@@author chenchongsong
     @XmlElement
     private List<XmlAdaptedItem> items = new ArrayList<>();
+    //@@author
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -96,10 +98,12 @@ public class XmlAdaptedPerson {
             personTags.add(tag.toModelType());
         }
 
+        //@@author chenchongsong
         final List<Item> personItems = new ArrayList<>();
         for (XmlAdaptedItem item : items) {
             personItems.add(item.toModelType());
         }
+        //@@author
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -141,8 +145,10 @@ public class XmlAdaptedPerson {
         //@@author
 
         final Set<Tag> tags = new HashSet<>(personTags);
+        //@@author chenchongsong
         final ArrayList<Item> items = new ArrayList<>(personItems);
         return new Person(name, phone, email, address, balance, tags, items);
+        //@@author
     }
 
     @Override
