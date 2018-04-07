@@ -43,7 +43,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Remove Tags for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_TAG_NOT_EXIST = "Certain Tag not Exits!";
+    public static final String MESSAGE_TAG_NOT_EXIST = "Your Input Contains Non-existent Tag(s)!";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;

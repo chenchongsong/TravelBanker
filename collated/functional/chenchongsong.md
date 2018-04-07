@@ -42,7 +42,8 @@ public class ItemAddCommand extends UndoableCommand {
             + PREFIX_NAME + "taxiFare "
             + PREFIX_MONEY + "30\n";
 
-    public static final String MESSAGE_ADD_ITEM_SUCCESS = "Items Added for Person %1$s.\n";
+    public static final String MESSAGE_ADD_ITEM_SUCCESS = "Item Added for Person %1$s.\n"
+            + "To view all items, use \"itemshow\" command!";
     public static final String MESSAGE_INVALID_ARGUMENT = "The Argument is Invalid!";
 
     private final Index targetIndex;
@@ -116,6 +117,120 @@ public class ItemAddCommand extends UndoableCommand {
 
 }
 ```
+###### /java/seedu/address/logic/commands/ItemDeleteCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.item.Item;
+import seedu.address.model.money.Money;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+
+/**
+ * Delete an item from a specified person
+ */
+public class ItemDeleteCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "itemdelete";
+    public static final String COMMAND_SHORTCUT = "id";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deleting an item from a specified person. "
+            + "Parameters: PERSON_INDEX ITEM_INDEX\n"
+            + "Example: " + COMMAND_WORD + " 1 2\n"
+            + "This example command deletes the second item from the first person.\n";
+
+    public static final String MESSAGE_ADD_ITEM_SUCCESS = "Items Deleted for Person %1$s.\n";
+    public static final String MESSAGE_INVALID_ARGUMENT = "The Argument is Invalid!";
+
+    private final Index indexPerson;
+    private final Index indexItem;
+    private Person personToEdit;
+    private Person editedPerson;
+
+    /**
+     * @param indexPerson The index of person in the filtered person list whose item the user wants to delete
+     * @param indexItem The index of item the user wants to delete
+     */
+    public ItemDeleteCommand(Index indexPerson, Index indexItem) {
+        requireNonNull(indexPerson);
+        requireNonNull(indexItem);
+        this.indexPerson = indexPerson;
+        this.indexItem = indexItem;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updatePerson(personToEdit, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("The target person cannot be duplicate");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_ADD_ITEM_SUCCESS, indexPerson.getOneBased()));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (indexPerson.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        personToEdit = lastShownList.get(indexPerson.getZeroBased());
+        editedPerson = getEditedPerson(personToEdit);
+    }
+
+    /**
+     * Creates and returns a {@code Person} with the details of {@code person}
+     * but with an updated item list
+     */
+    private Person getEditedPerson(Person person) {
+        assert person != null;
+
+        // references the original objects
+        Name name = person.getName();
+        Phone phone = person.getPhone();
+        Email email = person.getEmail();
+        Address address = person.getAddress();
+        Money money = person.getMoney();
+        Set<Tag> tags = person.getTags();
+        ArrayList<Item> items = getItemRemovedItemList(person.getItems());
+
+        // returns a new Person based mainly on references to original information, but with an updated item list
+        return new Person(name, phone, email, address, money, tags, items);
+    }
+
+    /**
+     * Create and returns an updated Item List
+     * where the target Item will be removed
+     */
+    private ArrayList<Item> getItemRemovedItemList(ArrayList<Item> items) {
+        assert items != null;
+        ArrayList<Item> itemRemovedItemList = new ArrayList<>(items);
+        itemRemovedItemList.remove(indexItem.getZeroBased());
+        return itemRemovedItemList;
+    }
+
+}
+```
 ###### /java/seedu/address/logic/commands/ItemShowCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -142,7 +257,8 @@ public class ItemShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Items Showed for Person: %1$s.\n";
+    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Items Showed for Person: %d.\n"
+            + "Money Due to Unknown Items: %.2f\n";
 
     private final Index targetIndex;
 
@@ -159,12 +275,15 @@ public class ItemShowCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        UniqueItemList items = lastShownList.get(targetIndex.getZeroBased()).getUniqueItemList();
-        return new CommandResult(getResultString(items));
+        Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        UniqueItemList items = targetPerson.getUniqueItemList();
+        Double reasonUnknownAmount = targetPerson.getReasonUnknownAmount();
+        return new CommandResult(getResultString(items, reasonUnknownAmount));
     }
 
-    private String getResultString(UniqueItemList items) {
-        return String.format(MESSAGE_SHOW_ITEM_SUCCESS, targetIndex.getOneBased()) + items.toString();
+    private String getResultString(UniqueItemList items, Double reasonUnknownAmount) {
+        return String.format(MESSAGE_SHOW_ITEM_SUCCESS, targetIndex.getOneBased(), reasonUnknownAmount)
+                + items.toString();
     }
 
     @Override
@@ -221,7 +340,7 @@ public class RemoveTagCommand extends UndoableCommand {
 
     public static final String MESSAGE_REMOVE_TAG_SUCCESS = "Remove Tags for Person: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
-    public static final String MESSAGE_TAG_NOT_EXIST = "Certain Tag not Exits!";
+    public static final String MESSAGE_TAG_NOT_EXIST = "Your Input Contains Non-existent Tag(s)!";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -537,6 +656,12 @@ public class SplitCommand extends UndoableCommand {
 
         case ItemAddCommand.COMMAND_SHORTCUT:
             return new ItemAddCommandParser().parse(arguments);
+
+        case ItemDeleteCommand.COMMAND_WORD:
+            return new ItemDeleteCommandParser().parse(arguments);
+
+        case ItemDeleteCommand.COMMAND_SHORTCUT:
+            return new ItemDeleteCommandParser().parse(arguments);
 ```
 ###### /java/seedu/address/logic/parser/ItemAddCommandParser.java
 ``` java
@@ -583,6 +708,58 @@ public class ItemAddCommandParser implements Parser<ItemAddCommand> {
         } catch (IllegalArgumentException iae) {
             throw new ParseException(ItemAddCommand.MESSAGE_INVALID_ARGUMENT);
         }
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/ItemDeleteCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.ItemDeleteCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new ItemDeleteCommand object.
+ * {@code indexPerson} represents the index of the person whose item the user want to delete.
+ * {@code indexItem} represents the index of the item that the user want to delete.
+ */
+public class ItemDeleteCommandParser implements Parser<ItemDeleteCommand> {
+
+    private Index indexPerson;
+    private Index indexItem;
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ItemDeleteCommand
+     * and returns an ItemDeleteCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ItemDeleteCommand parse(String args) throws ParseException {
+        try {
+            parsePersonItemIndices(args);
+            return new ItemDeleteCommand(indexPerson, indexItem);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemDeleteCommand.MESSAGE_USAGE));
+        }
+    }
+
+    /**
+     * Parses the given {@code String} of two indices into indexPerson and indexItem.
+     * @param args A string of two indices separated by a whitespace
+     * @throws IllegalValueException
+     */
+    private void parsePersonItemIndices(String args) throws IllegalValueException {
+        String[] indices = args.trim().split(" ");
+        if (indices.length != 2) {
+            throw new IllegalValueException(ParserUtil.MESSAGE_INVALID_INDEX);
+        }
+        indexPerson = ParserUtil.parseIndex(indices[0]);
+        indexItem = ParserUtil.parseIndex(indices[1]);
     }
 
 }
@@ -900,7 +1077,7 @@ public class Item {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "\n[" + itemName + "] : " + itemValue;
+        return "ItemName  [ " + itemName + " ]    ||    ItemValue [ " + itemValue + " ]";
     }
 
     public String getItemName() {
@@ -969,7 +1146,10 @@ public class UniqueItemList implements Iterable<Item> {
         assert CollectionUtil.elementsAreUnique(internalList);
         final StringBuilder builder = new StringBuilder();
         builder.append("Items: ");
-        internalList.forEach(builder::append);
+        for (int i = 0; i < internalList.size(); i++) {
+            builder.append("\nItem No." + Integer.toString(i + 1) + "    ||    ");
+            builder.append(internalList.get(i).toString());
+        }
         return builder.toString();
     }
 
@@ -1048,6 +1228,18 @@ public class UniqueItemList implements Iterable<Item> {
     }
 
     /**
+     * returns the sum of all items in the internalList
+     * @return
+     */
+    public double getValueSum() {
+        double sum = 0.0;
+        for (Item item: internalList) {
+            sum += Double.parseDouble(item.getItemValue());
+        }
+        return sum;
+    }
+
+    /**
      * Signals that an operation would have violated the 'no duplicates' property of the list.
      */
     public static class DuplicateItemException extends DuplicateDataException {
@@ -1090,6 +1282,40 @@ public class UniqueItemList implements Iterable<Item> {
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
         this.items = new UniqueItemList(items);
+    }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    /**
+     * Returns the amount of money due to unknown reasons/items
+     * @return
+     */
+    public Double getReasonUnknownAmount() {
+        return money.toDouble() - items.getValueSum();
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    public ArrayList<Item> getItems() {
+        return items.toArrayList();
+    }
+
+    public UniqueItemList getUniqueItemList() {
+        return items;
+    }
+
+    public void setItems(ArrayList<Item> items) {
+        this.items.setItems(items);
+    }
+
+    public void clearItems() {
+        this.items.setItems(new ArrayList<>());
     }
 ```
 ###### /java/seedu/address/model/person/Person.java

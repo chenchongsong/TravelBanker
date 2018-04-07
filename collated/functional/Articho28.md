@@ -1,30 +1,4 @@
 # Articho28
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    public void loadAtmSearchPage() {
-        loadPage(ATM_SEARCH_PAGE_URL);
-    }
-
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    private void loadPersonAddress(Person person) {
-        loadPage ( ADDRESS_SEARCH_PAGE_URL + person.getAddress().value);
-    }
-```
-###### /java/seedu/address/ui/BrowserPanel.java
-``` java
-    @Subscribe
-    private void handleShowMapRequestEvent(ShowMapRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadAtmSearchPage();
-    }
-
-}
-```
 ###### /java/seedu/address/commons/events/ui/ShowMapRequestEvent.java
 ``` java
 /**
@@ -34,50 +8,6 @@ public class ShowMapRequestEvent extends BaseEvent {
 
     public String toString() {
         return this.getClass().getSimpleName();
-    }
-}
-```
-###### /java/seedu/address/logic/commands/MinCommand.java
-``` java
-/**
- * Finds the person to which you owe the most money
- */
-public class MinCommand extends Command {
-
-    public static final String COMMAND_WORD = "min";
-    public static final String COMMAND_SHORTCUT = "mn";
-    public static final String MESSAGE_SUCCESS_FOUND = "The contact to which you owe the most money is: ";
-    public static final String MESSAGE_SUCCESS_NO_RESULT = "Good news! You don't owe any money.";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person to which you owe the most money ";
-    private CommandResult result;
-
-    public CommandResult getResult() {
-        return result;
-    }
-
-    public void setResult(CommandResult result) {
-        this.result = result;
-    }
-    @Override
-    public CommandResult execute() {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        Index index = Index.fromZeroBased(0);
-        double lowestDebt = 0.0;
-
-        for (int i = 0; i < lastShownList.size(); i++) {
-            Person person = lastShownList.get(i);
-            if (person.getMoney().balance < lowestDebt) {
-                index = Index.fromZeroBased(i);
-                lowestDebt = person.getMoney().balance;
-            }
-            if (lowestDebt == 0.0) {
-                result = new CommandResult(MESSAGE_SUCCESS_NO_RESULT);
-            } else {
-                EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
-                result = new CommandResult(MESSAGE_SUCCESS_FOUND + lastShownList.get(index.getZeroBased()).getName());
-            }
-        }
-        return result;
     }
 }
 ```
@@ -143,6 +73,76 @@ public class MapCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+
+}
+```
+###### /java/seedu/address/logic/commands/MinCommand.java
+``` java
+/**
+ * Finds the person to which you owe the most money
+ */
+public class MinCommand extends Command {
+
+    public static final String COMMAND_WORD = "min";
+    public static final String COMMAND_SHORTCUT = "mn";
+    public static final String MESSAGE_SUCCESS_FOUND = "The contact to which you owe the most money is: ";
+    public static final String MESSAGE_SUCCESS_NO_RESULT = "Good news! You don't owe any money.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person to which you owe the most money ";
+    private CommandResult result;
+
+    public CommandResult getResult() {
+        return result;
+    }
+
+    public void setResult(CommandResult result) {
+        this.result = result;
+    }
+    @Override
+    public CommandResult execute() {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Index index = Index.fromZeroBased(0);
+        double lowestDebt = 0.0;
+
+        for (int i = 0; i < lastShownList.size(); i++) {
+            Person person = lastShownList.get(i);
+            if (person.getMoney().balance < lowestDebt) {
+                index = Index.fromZeroBased(i);
+                lowestDebt = person.getMoney().balance;
+            }
+            if (lowestDebt == 0.0) {
+                result = new CommandResult(MESSAGE_SUCCESS_NO_RESULT);
+            } else {
+                EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                result = new CommandResult(MESSAGE_SUCCESS_FOUND + lastShownList.get(index.getZeroBased()).getName());
+            }
+        }
+        return result;
+    }
+}
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    public void loadAtmSearchPage() {
+        loadPage(ATM_SEARCH_PAGE_URL);
+    }
+
+    private void loadPersonPage(Person person) {
+        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    private void loadPersonAddress(Person person) {
+        loadPage (ADDRESS_SEARCH_PAGE_URL + person.getAddress().value);
+    }
+```
+###### /java/seedu/address/ui/BrowserPanel.java
+``` java
+    @Subscribe
+    private void handleShowMapRequestEvent(ShowMapRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadAtmSearchPage();
+    }
 
 }
 ```

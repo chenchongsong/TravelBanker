@@ -1,4 +1,56 @@
 # pkuhanan
+###### /java/seedu/address/logic/commands/BiggestDebtorCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import java.util.List;
+
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.index.Index;
+
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.model.person.Person;
+
+/**
+ * Finds the person that owes the most money
+ */
+public class BiggestDebtorCommand extends Command {
+    public static final String COMMAND_WORD = "biggest-debtor";
+    public static final String COMMAND_SHORTCUT = "bd";
+    public static final String MESSAGE_SUCCESS = "Biggest debtor found: ";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds the person that owes the most money ";
+
+    @Override
+    public CommandResult execute() {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        Index index = Index.fromZeroBased(0);
+        Double highestDebt = 0.0;
+
+        for (int i = 0; i < lastShownList.size(); i++) {
+            Person person = lastShownList.get
+                    (i);
+            if (person.getMoney().balance > highestDebt) {
+                index = Index.fromZeroBased(i);
+                highestDebt = person.getMoney().balance;
+            }
+        }
+
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+        return new CommandResult(MESSAGE_SUCCESS + Integer.toString(index.getOneBased()));
+    }
+}
+```
+###### /java/seedu/address/logic/commands/EditCommand.java
+``` java
+        public void setMoney(Money money) {
+            this.money = money;
+        }
+
+        public Optional<Money> getMoney() {
+            return Optional.ofNullable(money);
+        }
+```
 ###### /java/seedu/address/logic/commands/RemindCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -73,10 +125,52 @@ public class RemindCommand extends Command {
 ```
 ###### /java/seedu/address/logic/parser/AddressBookParser.java
 ``` java
+        case MaxCommand.COMMAND_WORD:
+            return new MaxCommand();
+
+        case MaxCommand.COMMAND_SHORTCUT:
+            return new MaxCommand();
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
+        case SettleCommand.COMMAND_WORD:
+            return new SettleCommandParser().parse(arguments);
+
+        case SettleCommand.COMMAND_SHORTCUT:
+            return new SettleCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/AddressBookParser.java
+``` java
         case RemindCommand.COMMAND_WORD:
             return new RemindCommandParser().parse(arguments);
         case RemindCommand.COMMAND_SHORTCUT:
             return new RemindCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String money} into an {@code Money}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code money} is invalid.
+     */
+    public static Money parseMoney(String money) throws IllegalValueException {
+        requireNonNull(money);
+        String trimmedMoney = money.trim();
+        if (!Money.isValidMoney(trimmedMoney)) {
+            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+        }
+        return new Money(trimmedMoney);
+    }
+
+    /**
+     * Parses a {@code Optional<String> money} into an {@code Optional<money>} if {@code money} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Money> parseMoney(Optional<String> money) throws IllegalValueException {
+        requireNonNull(money);
+        return money.isPresent() ? Optional.of(parseMoney(money.get())) : Optional.empty();
+    }
 ```
 ###### /java/seedu/address/logic/parser/RemindCommandParser.java
 ``` java
@@ -109,4 +203,83 @@ public class RemindCommandParser implements Parser<RemindCommand> {
         }
     }
 }
+```
+###### /java/seedu/address/model/money/Money.java
+``` java
+package seedu.address.model.money;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Represents a Person's Money Balance in the TravelBanker.
+ * Guarantees: immutable; is valid as declared in {@link #isValidMoney(String)}
+ */
+public class Money {
+    public static final String MESSAGE_MONEY_CONSTRAINTS = "Money values should be numbers";
+    public static final String MONEY_VALIDATION_REGEX = "-?\\d+(\\.\\d+)?(E-?\\d+)?";
+
+    public final double balance;
+    public final String value;
+
+    /**
+     * Constructs a {@code Money}.
+     *
+     * @param balance A valid money balance.
+     */
+    public Money(String balance) {
+        requireNonNull(balance);
+        checkArgument(isValidMoney(balance), MESSAGE_MONEY_CONSTRAINTS);
+        this.balance = Double.parseDouble(balance);
+        this.value = balance;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    public Double toDouble() {
+        return balance;
+    }
+
+    /**
+     * Returns true if a given string is a valid money balance.
+     */
+    public static boolean isValidMoney(String test) {
+        return test.matches(MONEY_VALIDATION_REGEX);
+    }
+
+```
+###### /java/seedu/address/model/money/Money.java
+``` java
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Money // instanceof handles nulls
+                && this.value.equals(((Money) other).value)); // state check
+    }
+```
+###### /java/seedu/address/model/person/Person.java
+``` java
+    public Money getMoney() {
+        return money;
+    }
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
+``` java
+    @XmlElement
+    private String balance;
+```
+###### /java/seedu/address/storage/XmlAdaptedPerson.java
+``` java
+        if (!Money.isValidMoney(this.balance)) {
+            throw new IllegalValueException(Money.MESSAGE_MONEY_CONSTRAINTS);
+        }
+        final Money balance = new Money(this.balance);
+```
+###### /java/seedu/address/ui/PersonCard.java
+``` java
+    @FXML
+    private Label money;
 ```
