@@ -61,7 +61,7 @@ public class Item {
      * Format state as text for viewing.
      */
     public String toString() {
-        return "\n[" + itemName + "] : " + itemValue;
+        return "ItemName  [ " + itemName + " ]    ||    ItemValue [ " + itemValue + " ]";
     }
 
     public String getItemName() {

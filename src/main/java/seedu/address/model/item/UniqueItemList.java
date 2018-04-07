@@ -53,7 +53,10 @@ public class UniqueItemList implements Iterable<Item> {
         assert CollectionUtil.elementsAreUnique(internalList);
         final StringBuilder builder = new StringBuilder();
         builder.append("Items: ");
-        internalList.forEach(builder::append);
+        for (int i = 0; i < internalList.size(); i++) {
+            builder.append("\nItem No." + Integer.toString(i+1) + "    ||    ");
+            builder.append(internalList.get(i).toString());
+        }
         return builder.toString();
     }
 
@@ -129,6 +132,18 @@ public class UniqueItemList implements Iterable<Item> {
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
         return internalList.hashCode();
+    }
+
+    /**
+     * returns the sum of all items in the internalList
+     * @return
+     */
+    public double getValueSum() {
+        double sum = 0.0;
+        for (Item item: internalList) {
+            sum += Double.parseDouble(item.getItemValue());
+        }
+        return sum;
     }
 
     /**

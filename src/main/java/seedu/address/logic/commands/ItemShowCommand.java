@@ -23,7 +23,8 @@ public class ItemShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Items Showed for Person: %1$s.\n";
+    public static final String MESSAGE_SHOW_ITEM_SUCCESS = "Items Showed for Person: %d.\n"
+            + "Money Due to Unknown Items: %.2f\n";
 
     private final Index targetIndex;
 
@@ -40,12 +41,15 @@ public class ItemShowCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        UniqueItemList items = lastShownList.get(targetIndex.getZeroBased()).getUniqueItemList();
-        return new CommandResult(getResultString(items));
+        Person targetPerson = lastShownList.get(targetIndex.getZeroBased());
+        UniqueItemList items = targetPerson.getUniqueItemList();
+        Double reasonUnknownAmount = targetPerson.getReasonUnknownAmount();
+        return new CommandResult(getResultString(items, reasonUnknownAmount));
     }
 
-    private String getResultString(UniqueItemList items) {
-        return String.format(MESSAGE_SHOW_ITEM_SUCCESS, targetIndex.getOneBased()) + items.toString();
+    private String getResultString(UniqueItemList items, Double reasonUnknownAmount) {
+        return String.format(MESSAGE_SHOW_ITEM_SUCCESS, targetIndex.getOneBased(), reasonUnknownAmount)
+                + items.toString();
     }
 
     @Override

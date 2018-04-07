@@ -93,6 +93,14 @@ public class Person {
     }
 
     /**
+     * Returns the amount of money due to unknown reasons/items
+     * @return
+     */
+    public Double getReasonUnknownAmount() {
+        return money.toDouble() - items.getValueSum();
+    }
+
+    /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
