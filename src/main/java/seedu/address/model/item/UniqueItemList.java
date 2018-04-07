@@ -54,7 +54,7 @@ public class UniqueItemList implements Iterable<Item> {
         final StringBuilder builder = new StringBuilder();
         builder.append("Items: ");
         for (int i = 0; i < internalList.size(); i++) {
-            builder.append("\nItem No." + Integer.toString(i+1) + "    ||    ");
+            builder.append("\nItem No." + Integer.toString(i + 1) + "    ||    ");
             builder.append(internalList.get(i).toString());
         }
         return builder.toString();
