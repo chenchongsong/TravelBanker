@@ -257,7 +257,7 @@ There is no need to save manually.
 Calculates your total balance. +
 Format: `balance` or `b`
 
-
+// tag::removetag[]
 === Remove Tags: `removetag` or `rt` [Since v1.2]
 
 Remove Tags from a specific person in the TravelBanker. +
@@ -268,7 +268,7 @@ Examples:
 
 * `removetag 1 t/owesMoney t/friends` +
 Remove the tags `owesMoney` and `friends` from the first person.
-
+// end::removetag[]
 
 === Seeing which contact owes you the most: `max` or `mx` [Since v1.2]
 
@@ -281,7 +281,7 @@ Format: `max`
 Lists the contact to which you owe the most money. +
 Format: `min`
 
-
+// tag::sort[]
 === Sorting all persons: `sort` or  `so` [Since v1.2]
 
 Sorts all persons in ascendingly or descendingly, ordering by the specified keywords. +
@@ -292,8 +292,9 @@ Examples:
 
 * `sort n/asc`
 * `so m/desc`
+// end::sort[]
 
-
+// tag::split[]
 === Splitting a bill: `split` or  `sp` [Since v1.3]
 
 Splits a bill among multiple people, specified by their indices. +
@@ -304,6 +305,7 @@ Examples:
 
 * `split 1 2 m/200`
 * `sp 1 2 3 m/400.00`
+// end::split[]
 
 === Clear up everyone's balance: `wipe` or `w` [Since v1.3]
 
@@ -311,6 +313,7 @@ Wipes everyone's balances to 0.0 +
 Format: `wipe` +
 Format: `w`
 
+// tag::item[]
 === Showing items related to a person : `itemshow` or `is` [Since v1.4]
 
 Show all items related to a person (specified by INDEX). +
@@ -362,7 +365,7 @@ Examples:
 
 * `itemdelete 1 2`
 * This deletes the second item from the first person in the contact list.
-
+// end::item[]
 
 === Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
 

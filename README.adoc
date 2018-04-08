@@ -11,7 +11,7 @@ image::docs/images/UIMockup.png[width="600"]
 endif::[]
 
 ifndef::env-github[]
-image::docs/images/UIMockup.png[width="600"]
+image::images/UIMockup.png[width="600"]
 endif::[]
 
 == Introduction
