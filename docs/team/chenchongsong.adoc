@@ -19,25 +19,14 @@ This is a desktop java application that helps people, particularly travellers, t
 
 * *Minor enhancement*: implemented a SortCommand to sort contact list ascendingly or descendingly according to balance, name, email, address, phone, etc.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/chenchongsong.md] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/chenchongsong.md] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/chenchongsong.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/chenchongsong.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
+*** Contributed codes towards the releases of `v1.0` - `v1.5rc` (3 releases) on GitHub
+*** Raising Issues
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
