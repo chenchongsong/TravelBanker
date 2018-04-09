@@ -25,6 +25,7 @@ public class Item {
      */
     public Item(String itemName, String itemValue) {
         requireNonNull(itemName);
+        requireNonNull(itemValue);
         checkArgument(isValidItemName(itemName), MESSAGE_ITEMNAME_CONSTRAINTS);
         checkArgument(isValidItemValue(itemValue), MESSAGE_ITEMVALUE_CONSTRAINTS);
         this.itemName = itemName;
@@ -49,7 +50,8 @@ public class Item {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Item // instanceof handles nulls
-                && this.itemName.equals(((Item) other).itemName)); // state check
+                && this.itemName.equals(((Item) other).itemName)
+                && this.itemValue.equals(((Item) other).itemValue)); // state check
     }
 
     @Override
