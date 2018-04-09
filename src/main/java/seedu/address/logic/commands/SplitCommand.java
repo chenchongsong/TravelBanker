@@ -124,4 +124,23 @@ public class SplitCommand extends UndoableCommand {
         return new Money(Double.toString(updatedBalance));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof SplitCommand)) {
+            return false;
+        }
+
+        // state check
+        SplitCommand o = (SplitCommand) other;
+
+        return bill == o.bill
+                && indices.equals(o.indices);
+    }
+
 }
