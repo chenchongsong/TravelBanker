@@ -18,16 +18,15 @@ import seedu.address.logic.commands.SplitCommand;
 
 public class SplitCommandParserTest {
 
-    private SplitCommandParser parser = new SplitCommandParser();
-
     private static String validIndex = "1";
     private static String validIndices1 = "1 2 3";
     private static String validIndices2 = "1 1 1 2";
     private static String invalidIndex1 = "a";
     private static String invalidIndex2 = "0";
-
     private static String validBill1 = PREFIX_MONEY + "100.00";
     private static String validBill2 = PREFIX_MONEY + "-0.12";
+
+    private SplitCommandParser parser = new SplitCommandParser();
 
     @Test
     public void parse_validArgsSingleIndex_returnsSplitCommand() {
