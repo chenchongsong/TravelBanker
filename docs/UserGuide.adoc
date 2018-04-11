@@ -367,16 +367,18 @@ Examples:
 * This deletes the second item from the first person in the contact list.
 // end::item[]
 
+// tag::settle[]
 === Settling up your balance with a contact: `settle` or `stl`[Since v1.3]
 
 Sets the balance of the specified contact to 0. +
 Format: `settle INDEX`
-
+// end::settle[]
+// tag::remind[]
 === Remind a contact to pay their balance: `remind` or `rm`[Since v1.4]
 
 Opens the default email client with a generated email to the contact with the balance in the message.
 Format: `remind INDEX`
-
+// end::remind[]
 === View a contact's address on the map with `select` [Since v1.4]
 
 Searches for the contact's address in the map display once that contact is selected.
