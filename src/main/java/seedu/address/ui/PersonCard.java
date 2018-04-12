@@ -53,7 +53,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        money.setText(person.getMoney().value);
+        money.setText("Balance: " + person.getMoney().value);
         initTags(person);
     }
 
