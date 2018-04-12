@@ -1,3 +1,4 @@
+//@@author chenchongsong
 package seedu.address.model.item;
 
 import static org.junit.Assert.assertFalse;
@@ -9,12 +10,12 @@ import seedu.address.testutil.Assert;
 
 public class ItemTest {
 
-    private static final String validItemName1 = "Taxi Fare Split";
-    private static final String validItemName2 = "Taxi_Fare_Split";
-    private static final String validItemName3 = "Taxi  Fare  Split";
-    private static final String validItemName4 = "Taxi__Fare__Split";
-    private static final String invalidItemName = "";
-    private static final String invalidItemValue1 = "";
+    private static final String VALID_ITEM_NAME_1 = "Taxi Fare Split";
+    private static final String VALID_ITEM_NAME_2 = "Taxi_Fare_Split";
+    private static final String VALID_ITEM_NAME_3 = "Taxi  Fare  Split";
+    private static final String VALID_ITEM_NAME_4 = "Taxi__Fare__Split";
+    private static final String INVALID_ITEM_NAME = "";
+    private static final String INVALID_ITEM_VALUE_1 = "";
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -23,7 +24,7 @@ public class ItemTest {
 
     @Test
     public void constructor_invalidItemName_throwsIllegalArgumentException() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Item(invalidItemName, invalidItemValue1));
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Item(INVALID_ITEM_NAME, INVALID_ITEM_VALUE_1));
     }
 
     @Test
@@ -41,10 +42,10 @@ public class ItemTest {
         assertTrue(Item.isValidItemName("12345")); // numbers only
         assertTrue(Item.isValidItemName("some item name 123456")); // alphanumeric characters
         assertTrue(Item.isValidItemName("Some Item Name")); // with capital letters
-        assertTrue(Item.isValidItemName(validItemName1)); // separated by space
-        assertTrue(Item.isValidItemName(validItemName2)); // separated by _
-        assertTrue(Item.isValidItemName(validItemName3)); // separated by two spaces
-        assertTrue(Item.isValidItemName(validItemName4)); // separated by __
+        assertTrue(Item.isValidItemName(VALID_ITEM_NAME_1)); // separated by space
+        assertTrue(Item.isValidItemName(VALID_ITEM_NAME_2)); // separated by _
+        assertTrue(Item.isValidItemName(VALID_ITEM_NAME_3)); // separated by two spaces
+        assertTrue(Item.isValidItemName(VALID_ITEM_NAME_4)); // separated by __
     }
 
     @Test

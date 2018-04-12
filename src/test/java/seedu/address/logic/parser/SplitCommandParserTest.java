@@ -18,13 +18,13 @@ import seedu.address.logic.commands.SplitCommand;
 
 public class SplitCommandParserTest {
 
-    private static String validIndex = "1";
-    private static String validIndices1 = "1 2 3";
-    private static String validIndices2 = "1 1 1 2";
-    private static String invalidIndex1 = "a";
-    private static String invalidIndex2 = "0";
-    private static String validBill1 = PREFIX_MONEY + "100.00";
-    private static String validBill2 = PREFIX_MONEY + "0.12";
+    private static final String VALID_INDEX = "1";
+    private static final String VALID_INDICES_1 = "1 2 3";
+    private static final String VALID_INDICES_2 = "1 1 1 2";
+    private static final String INVALID_INDEX_1 = "a";
+    private static final String INVALID_INDEX_2 = "0";
+    private static final String VALID_BILL_1 = PREFIX_MONEY + "100.00";
+    private static final String VALID_BILL_2 = PREFIX_MONEY + "0.12";
 
     private SplitCommandParser parser = new SplitCommandParser();
 
@@ -32,7 +32,7 @@ public class SplitCommandParserTest {
     public void parse_validArgsSingleIndex_returnsSplitCommand() {
         ArrayList<Index> indices = new ArrayList<>();
         indices.add(INDEX_FIRST_PERSON);
-        assertParseSuccess(parser, validIndex + " " + validBill1,
+        assertParseSuccess(parser, VALID_INDEX + " " + VALID_BILL_1,
                 new SplitCommand(indices, 100.00));
     }
 
@@ -42,7 +42,7 @@ public class SplitCommandParserTest {
         indices.add(INDEX_FIRST_PERSON);
         indices.add(INDEX_SECOND_PERSON);
         indices.add(INDEX_THIRD_PERSON);
-        assertParseSuccess(parser, validIndices1 + " " + validBill2,
+        assertParseSuccess(parser, VALID_INDICES_1 + " " + VALID_BILL_2,
                 new SplitCommand(indices, 0.12));
 
         // In this case, the first person would take 3/4 of that bill
@@ -52,16 +52,16 @@ public class SplitCommandParserTest {
         indices.add(INDEX_FIRST_PERSON);
         indices.add(INDEX_FIRST_PERSON);
         indices.add(INDEX_SECOND_PERSON);
-        assertParseSuccess(parser, validIndices2 + " " + validBill2,
+        assertParseSuccess(parser, VALID_INDICES_2 + " " + VALID_BILL_2,
                 new SplitCommand(indices, 0.12));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, invalidIndex1 + " " + validBill1,
+        assertParseFailure(parser, INVALID_INDEX_1 + " " + VALID_BILL_1,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
 
-        assertParseFailure(parser, invalidIndex2 + " " + validBill2,
+        assertParseFailure(parser, INVALID_INDEX_2 + " " + VALID_BILL_2,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SplitCommand.MESSAGE_USAGE));
     }
 
