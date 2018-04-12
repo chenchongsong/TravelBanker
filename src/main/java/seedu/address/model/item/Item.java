@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Item {
 
     public static final String MESSAGE_ITEMNAME_CONSTRAINTS = "ItemNames should be alphanumeric with whitespaces or _";
-    public static final String MESSAGE_ITEMVALUE_CONSTRAINTS = "Item Values should be a floating point number!";
+    public static final String MESSAGE_ITEMVALUE_CONSTRAINTS = "ItemValues can be integers or floating point numbers!";
     public static final String ITEM_NAME_VALIDATION_REGEX = "[\\p{Alnum}_\\s]+";
     public static final String ITEM_VALUE_VALIDATION_REGEX = "-?\\d+(\\.\\d+)?(E-?\\d+)?";
 

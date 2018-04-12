@@ -42,7 +42,9 @@ public class ItemAddCommand extends UndoableCommand {
 
     public static final String MESSAGE_ADD_ITEM_SUCCESS = "Item Added for Person %1$s.\n"
             + "To view all items, use \"itemshow\" command!";
-    public static final String MESSAGE_INVALID_ARGUMENT = "The Argument is Invalid!";
+    public static final String MESSAGE_INVALID_ARGUMENT = "The Argument is Invalid!" + "\n"
+            + Item.MESSAGE_ITEMNAME_CONSTRAINTS + "\n"
+            + Item.MESSAGE_ITEMVALUE_CONSTRAINTS;
 
     private final Index targetIndex;
     private final Item item;

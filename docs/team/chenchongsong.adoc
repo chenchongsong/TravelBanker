@@ -24,8 +24,9 @@ This is a desktop java application that helps people, particularly travellers, t
 * *Other contributions*:
 
 ** Project management:
-*** Contributed codes towards the releases of `v1.0` - `v1.5rc` (3 releases) on GitHub
+*** Contributed codes towards the releases of `v1.0` - `v1.5` (7 releases) on GitHub
 *** Raising Issues
+*** Set up Coverall for Team Repo
 ** Documentation:
 *** Modify the Read Me Page to adapt to TravelBanker: https://github.com/CS2103JAN2018-T11-B4/main/pull/29/files[#29]
 
