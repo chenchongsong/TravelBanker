@@ -28,18 +28,18 @@ public class CurrencyCommand extends Command {
     public static final String COMMAND_SHORTCUT = "cv";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Converts the balance of the person identified by the index number into a new "
+            + "currency chosen by the user. \n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[Current Currency Symbol]  "
             + "[New Currency Symbol]\n"
             + "Example: " + COMMAND_WORD + " 1" + " SGD" + " USD";
     public static final String MESSAGE_SUCCESS = "Here is your balance in the new currency";
-
     private String fromCurrency;
     private String toCurrency;
     private Index index;
     private Person convertedPerson;
-    private Double convertedPersonBalance;
+    private Double convertedPersonBalance = 0.0;
     private BigDecimal newAmount;
 
     private CurrencyConverter converter = new CurrencyConverterBuilder()
@@ -55,20 +55,29 @@ public class CurrencyCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
+
         converter.setRefreshRateSeconds(86400);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        convertedPerson = lastShownList.get(index.getZeroBased());
-        convertedPersonBalance = convertedPerson.getMoney().balance;
+        if (index.getZeroBased() == 0) {
+            lastShownList = model.getFilteredPersonList();
+            for (Person person : lastShownList) {
+                double currentPersonBalance = person.getMoney().balance;
+                convertedPersonBalance = convertedPersonBalance + currentPersonBalance;
+            }
+        } else {
+            convertedPerson = lastShownList.get(index.getZeroBased());
+            convertedPersonBalance = convertedPerson.getMoney().balance;
+        }
 
         try {
             newAmount = converter.convertCurrency(new BigDecimal(convertedPersonBalance),
             Currency.get(fromCurrency), Currency.get(toCurrency));
         } catch (CurrencyNotSupportedException cnse) {
-            throw new AssertionError("Currency not supported");
+            throw new CommandException("Currency not supported");
         } catch (JSONException jsone) {
             throw new AssertionError("JSON Exception");
         } catch (StorageException se) {
@@ -77,8 +86,15 @@ public class CurrencyCommand extends Command {
             throw new AssertionError("Endpoint Exception");
         } catch (ServiceException se) {
             throw new AssertionError("Service Exception");
+        } catch (NullPointerException npe) {
+            throw new CommandException("Invalid currency");
         }
-        return new CommandResult(convertedPerson.getName() + "'s balance in " + toCurrency + " is: " + newAmount);
+
+        if (index.getZeroBased() == 0) {
+            return new CommandResult("Your total balance in " + toCurrency + " is: " + newAmount);
+        } else {
+            return new CommandResult(convertedPerson.getName() + "'s balance in " + toCurrency + " is: " + newAmount);
+        }
 
     }
 }

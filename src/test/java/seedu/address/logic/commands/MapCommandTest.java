@@ -1,3 +1,5 @@
+//@@author Articho28
+
 package seedu.address.logic.commands;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
@@ -23,7 +25,6 @@ import seedu.address.ui.GuiUnitTest;
 
 
 
-//@@author Articho28
 public class MapCommandTest extends GuiUnitTest {
 
     private BrowserPanel browserPanel;

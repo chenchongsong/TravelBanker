@@ -230,7 +230,7 @@ Classes used by multiple components are in the `seedu.TravelBanker.commons` pack
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
+// tag::posneg[]
 === List Positive/Negative feature
 ==== Current Implementation
 
@@ -259,17 +259,19 @@ public Predicate<Person> isPositiveBalance(){
 
 The negative balance works the same way just checking to see if the balance is less than 0.
 
-====Alternatives Considered
+==== Alternatives Considered
 
 For an alternative way, I considered creating a new empty list `positiveList` and then adding to `positiveList` whenever the balance is greater than 0. Then I was going to display positive list. However this did not end up working because I noticed that updating the flitered list needed a predicate function as a paramter which my approach would not have. Therefore I had to consider a different approach that involved a predicate function.
 
-====Future Additions
+==== Future Additions
 
 I can further refine the function to be much more powerful in filtering and listing out people. For instance, I could allow it to list people with whose names start with a specific letter because in an large addressbook, the user might want to quickly go through the addressbook, not ones who just have a postiive or negative balance.
 
 
 The function is a predicate function that checks to see if `a.getMoney().balance>=0` because the function `updateFilteredPersonList()` takes in a predicate parameter. In our function we see the predicate check to see if the person's money balance is positive and if so, it will be returned.
 
+//end::posneg[]
+//tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
 
@@ -1134,6 +1136,7 @@ See this https://github.com/se-edu/TravelBanker-level4/pull/599[PR] for the step
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+// tag::productScope[]
 * has a need to manage finances with fellow contacts
 * has a need to keep track of personal balance
 * has a need to keep track of transactions between contacts
@@ -1149,9 +1152,11 @@ See this https://github.com/se-edu/TravelBanker-level4/pull/599[PR] for the step
 as seen in traditional book-keeping methods.
 * find a nearby ATM as soon as a contact is loaded, which removes the need to switch apps when wanting to settle a debt.
 * list the contacts that owe you money or to which you owe money, thus removing the need to manually filter out the contacts you are looking for.
+* lists all the contacts according to specified tags, removing the need to identify amounts owed by groups of people manually.
 
+// end::productScope[]
 === Feature contribution
-
+// tag::featureContribution[]
 * *Artsiom Skliar*
 ** *Major Enhancement*: Incorporate map functionality to the TravelBanker. MapCommand shows the nearest ATM from the person's location.
 Also, incorporating balance and min commands, which calculates your overall balance as registered in TravelBanker.
@@ -1163,8 +1168,10 @@ map functionality also shows the user how he can settle his debts quickly.
 
 ** *Minor Enhancement*: created aliases for every command received by TravelBanker to increase its efficiency.
 This is important to the product as it aims to be quick and efficient. Shortcuts for every command (except exit to
- avoid accidents) allows for a quicker and smoother user experience, thus making book-keeping quick and easy.
+ avoid accidents) allows for a quicker and smoother user experience, thus making book-keeping quick and easy. Incorporate
+ a `searchtag` command to list only people carrying specific tags.
 
+// end::featureContribution[]
 * *Eric Zhou*
 ** *Major Enhancement*: incorporating various listing features which will can filter the list to list out people who owe you a negative amount or a positive amount.
 This is essential to the product as a user will be able to quickly see who owes them money or who they owe money to.
@@ -1213,7 +1220,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the accounting book |sort persons by name |locate a person easily
 
 |`* *`|user | redo or undo a command I just typed in|
-
+// tag::userStories[]
 |`* * *` |user | add/update/settle an amount of money that a contact owes me |
 
 |`* * *` |user | check my overall balance |
@@ -1226,12 +1233,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user | see to which contact I owe the most money. |
 
+
+| `* * *`|user | see which contact owes me the most money |
+
+| `* *` |user | see a list of people with specific tags | have an overview of the money a group owes me
+
+| `*` |user | see the address of a user|
+
+
+// end::userStories[]
 |`* *` |user | see for which items/reasons do I owe a contact / a contact owes me |
 
 |`* *` |user | add an item/reason under a specified person |
 
 |`* *` |user | delete an item/reason from a specified person |
-
+// tag::userStories[]
 |`*` |user | choose the balance the currency that I am owed |
 
 |`*` |user | convert my balance into a different currency |
@@ -1239,10 +1255,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user | calculate the amount I am owed/I owe with an applied interest rate |
 
 | `* * *` |user | have a map functionality | find the nearest ATM to settle my accounts
-
+// end::userStories[]
 |`*` |user | sort the contact list according to my wishes |
 
-|`*` |user | split a bill evenly among multiple peple |
+|`*` |user | split a bill evenly among multiple people |
 
 |`*` |user | remove certain tags from a person |
 

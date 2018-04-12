@@ -1,19 +1,21 @@
-package seedu.address.logic.commands;
+# software-1234
+###### /java/seedu/address/logic/commands/CurrencyCommandTest.java
+``` java
+public class CurrencyCommandTest {
+    private CurrencyCommand currencyCommand;
 
-import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Before;
-import org.junit.Test;
+    @Before
+    public void setUp() {
+        Model model = new ModelManager();
+        currencyCommand = new CurrencyCommand(INDEX_FIRST_PERSON,"USD", "SGD");
 
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 
-//@@author software-1234
+}
+}
+```
+###### /java/seedu/address/logic/commands/WipeCommandTest.java
+``` java
 public class WipeCommandTest {
     private Model model;
     private Model expectedModel;
@@ -40,3 +42,4 @@ public class WipeCommandTest {
 
     }
 }
+```

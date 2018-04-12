@@ -50,6 +50,10 @@ public class TypicalPersons {
             .withEmail("stefan@example.com").withAddress("little india").withMoney("10").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").withMoney("10").build();
+    public static final Person JACK = new PersonBuilder().withName("Jack").withPhone("111111")
+            .withEmail("jack@example.com").withAddress("france").withMoney("27").build();
+    public static final Person KATE = new PersonBuilder().withName("KATE").withPhone("000000")
+            .withEmail("jack@example.com").withAddress("100 anywhere street").withMoney("-13.24").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

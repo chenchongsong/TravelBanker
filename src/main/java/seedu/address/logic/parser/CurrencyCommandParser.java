@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.CurrencyCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -23,13 +22,17 @@ public class CurrencyCommandParser implements Parser<CurrencyCommand> {
 
         String fromCurrency;
         String toCurrency;
-
+        Index currencyIndex;
         try {
             String trimmedArgs = args.trim();
             String[] currencyKeywords = trimmedArgs.split(" ");
-            Index currencyIndex = Index.fromOneBased(Integer.parseInt(currencyKeywords[0]));
+            if (Integer.parseInt(currencyKeywords[0]) == 0) {
+                currencyIndex = Index.fromZeroBased(0);
+            } else {
+                currencyIndex = Index.fromOneBased(Integer.parseInt(currencyKeywords[0]));
+            }
 
-            if (!StringUtil.isNonZeroUnsignedInteger(currencyKeywords[0])) {
+            if (currencyIndex.getZeroBased() < 0) {
                 throw new IllegalValueException(MESSAGE_INVALID_INDEX);
             }
 
@@ -42,10 +45,16 @@ public class CurrencyCommandParser implements Parser<CurrencyCommand> {
         } catch (NumberFormatException nfe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        } catch (IllegalArgumentException iae) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
+        } catch (ArrayIndexOutOfBoundsException aiobe) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, CurrencyCommand.MESSAGE_USAGE));
         }
-
     }
 
 }
+
 
 

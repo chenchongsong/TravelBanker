@@ -10,7 +10,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 /**
  * Handles the balance command.
  */
-public class WipeBalancesCommand extends Command {
+public class WipeBalancesCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "wipe";
     public static final String COMMAND_SHORTCUT = "w";
@@ -21,7 +21,7 @@ public class WipeBalancesCommand extends Command {
 
     private Money cleared = new Money("0.0");
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult executeUndoableCommand() throws CommandException {
         Person oldPerson;
         try {
             for (Person p : model.getFilteredPersonList()) {
