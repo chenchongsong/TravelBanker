@@ -40,8 +40,11 @@ public class SplitCommandParser implements Parser<SplitCommand> {
         try {
             Optional<String> money = argMultimap.getValue(PREFIX_MONEY);
             bill = Double.parseDouble(money.get());
+            if (bill < 0) {
+                throw new Exception("Negative Value Detected");
+            }
         } catch (Exception e) {
-            throw new ParseException("A correct number(money) needs to be provided for the Bill!");
+            throw new ParseException("A correct POSITIVE number(money) needs to be provided for the Bill!");
         }
 
         return new SplitCommand(indices, bill);

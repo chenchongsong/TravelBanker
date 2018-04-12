@@ -24,7 +24,7 @@ public class SplitCommandParserTest {
     private static String invalidIndex1 = "a";
     private static String invalidIndex2 = "0";
     private static String validBill1 = PREFIX_MONEY + "100.00";
-    private static String validBill2 = PREFIX_MONEY + "-0.12";
+    private static String validBill2 = PREFIX_MONEY + "0.12";
 
     private SplitCommandParser parser = new SplitCommandParser();
 
@@ -43,7 +43,7 @@ public class SplitCommandParserTest {
         indices.add(INDEX_SECOND_PERSON);
         indices.add(INDEX_THIRD_PERSON);
         assertParseSuccess(parser, validIndices1 + " " + validBill2,
-                new SplitCommand(indices, -0.12));
+                new SplitCommand(indices, 0.12));
 
         // In this case, the first person would take 3/4 of that bill
         // and the second person would take 1/4 of that bill
@@ -53,7 +53,7 @@ public class SplitCommandParserTest {
         indices.add(INDEX_FIRST_PERSON);
         indices.add(INDEX_SECOND_PERSON);
         assertParseSuccess(parser, validIndices2 + " " + validBill2,
-                new SplitCommand(indices, -0.12));
+                new SplitCommand(indices, 0.12));
     }
 
     @Test
