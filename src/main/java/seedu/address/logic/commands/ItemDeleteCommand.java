@@ -120,4 +120,12 @@ public class ItemDeleteCommand extends UndoableCommand {
         return itemRemovedItemList;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ItemDeleteCommand // instanceof handles nulls
+                && this.indexPerson.equals(((ItemDeleteCommand) other).indexPerson)
+                && this.indexItem.equals(((ItemDeleteCommand) other).indexItem)); // state check
+    }
+
 }
