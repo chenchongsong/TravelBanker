@@ -104,7 +104,7 @@ public class ItemDeleteCommand extends UndoableCommand {
             throw new IllegalValueException(Messages.MESSAGE_INVALID_ITEM_INDEX);
         }
         ArrayList<Item> items = getItemRemovedItemList(person.getItems());
-        
+
         // returns a new Person based mainly on references to original information, but with an updated item list
         return new Person(name, phone, email, address, money, tags, items);
     }

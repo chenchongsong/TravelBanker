@@ -300,6 +300,14 @@ Sorts all persons in ascendingly or descendingly, ordering by the specified keyw
 Format: `sort KEYWORD_PREFIX/ORDER` +
 Format: `so KEYWORD_PREFIX/ORDER`
 
+****
+* ORDER can only be asc or desc.
+* KERWORD_PREFIX can be n/ p/ e/ a/ t/ m/
+* When KEYWORD_PREFIX is specified as n/ p/ e/ or a/, corresponding filed will be sorted alphabetically.
+* When KEYWORD_PREFIX is specified as t/, people will be sorted according to the number of tags.
+* When KEYWORD_PREFIX is specified as m/, people will be sorted according to the value of money filed.
+****
+
 Examples:
 
 * `sort n/asc`
