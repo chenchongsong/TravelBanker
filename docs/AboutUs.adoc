@@ -17,7 +17,7 @@ Role: Team Lead + Deliverables and Deadlines
 
 === Prian Kudahan
 image::pkunahan.jpg[width="150", align="left"]
-{empty}[http://github.com/pkunahan[github]] [<<pkunahan#, portfolio>>]
+{empty}[http://github.com/pkuhanan[github]] [<<pkuhanan#, portfolio>>]
 
 Role: Testing
 
