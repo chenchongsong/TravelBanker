@@ -9,7 +9,7 @@ TravelBanker - v1.5 was developed by CS2103 Team T11-B4 during their study at Na
 
 === Arty Skillar
 image::Articho28.jpg[width="150", align="left"]
-{empty}[https://github.com/Articho28[github]] [<<johndoe#, portfolio>>]
+{empty}[https://github.com/Articho28[github]] [<<Articho28#, portfolio>>]
 
 Role: Team Lead + Deliverables and Deadlines
 
@@ -17,7 +17,7 @@ Role: Team Lead + Deliverables and Deadlines
 
 === Prian Kudahan
 image::pkunahan.jpg[width="150", align="left"]
-{empty}[http://github.com/pkunahan[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/pkunahan[github]] [<<pkunahan#, portfolio>>]
 
 Role: Testing
 
@@ -26,7 +26,7 @@ Role: Testing
 
 === Chen Chongsong
 image::chenchongsong.jpg[width="150", align="left"]
-{empty}[http://github.com/chenchongsong[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/chenchongsong[github]] [<<chenchongsong#, portfolio>>]
 
 Role: Code Quality
 
@@ -35,7 +35,7 @@ Role: Code Quality
 
 === Eric Zhou
 image::software-1234.jpg[width="150", align="left"]
-{empty}[http://github.com/software-1234[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/software-1234[github]] [<<software-1234#, portfolio>>]
 
 Role: Documentation
 
