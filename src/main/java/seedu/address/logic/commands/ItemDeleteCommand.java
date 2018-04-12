@@ -10,6 +10,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.item.Item;
 import seedu.address.model.money.Money;
@@ -30,8 +31,9 @@ public class ItemDeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "itemdelete";
     public static final String COMMAND_SHORTCUT = "id";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deleting an item from a specified person. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deleting an item from a specified person.\n"
             + "Parameters: PERSON_INDEX ITEM_INDEX\n"
+            + "PERSON_INDEX and ITEM_INDEX should be POSITIVE integers!\n"
             + "Example: " + COMMAND_WORD + " 1 2\n"
             + "This example command deletes the second item from the first person.\n";
 
@@ -74,15 +76,20 @@ public class ItemDeleteCommand extends UndoableCommand {
         if (indexPerson.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
+
         personToEdit = lastShownList.get(indexPerson.getZeroBased());
-        editedPerson = getEditedPerson(personToEdit);
+        try {
+            editedPerson = getEditedPerson(personToEdit);
+        } catch (IllegalValueException ive) {
+            throw new CommandException(ive.getMessage());
+        }
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code person}
      * but with an updated item list
      */
-    private Person getEditedPerson(Person person) {
+    private Person getEditedPerson(Person person) throws IllegalValueException {
         assert person != null;
 
         // references the original objects
@@ -92,8 +99,12 @@ public class ItemDeleteCommand extends UndoableCommand {
         Address address = person.getAddress();
         Money money = person.getMoney();
         Set<Tag> tags = person.getTags();
-        ArrayList<Item> items = getItemRemovedItemList(person.getItems());
 
+        if (indexItem.getZeroBased() >= person.getItems().size()) {
+            throw new IllegalValueException(Messages.MESSAGE_INVALID_ITEM_INDEX);
+        }
+        ArrayList<Item> items = getItemRemovedItemList(person.getItems());
+        
         // returns a new Person based mainly on references to original information, but with an updated item list
         return new Person(name, phone, email, address, money, tags, items);
     }
