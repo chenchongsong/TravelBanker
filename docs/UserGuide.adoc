@@ -476,13 +476,13 @@ This facilitates understanding of the debt.
 Format: `describe INDEX`
 
 // tag::transaction[]
-=== Report a transaction and automatically update a contact's balance accordingly [Since v1.5rc]
+=== Report a transaction and automatically update a contact's balance accordingly: `transaction` or `t` [Since v1.5rc]
 
 Updates the contacts balance with the correct new balance after the transaction.
 For TRANSACTION_AMOUNT, a positive number represents money received from the contact and a negative number represents
 money paid to the contact.
 Format : `transaction INDEX TRANSACTION_AMOUNT`
-// tag::transaction[]
+// end::transaction[]
 
 // tag::trip[]
 === Shows on which trip a balance was established from user and contact : `trip [DESTINATION]` or `t` [Coming in v2.0]

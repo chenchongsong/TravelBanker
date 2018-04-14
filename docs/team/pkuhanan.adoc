@@ -43,7 +43,9 @@ intertwined with several existing components and commands making it quite challe
 |===
 
 include::../UserGuide.adoc[tag=settle]
+
 include::../UserGuide.adoc[tag=remind]
+
 include::../UserGuide.adoc[tag=transaction]
 
 == Contributions to the Developer Guide
