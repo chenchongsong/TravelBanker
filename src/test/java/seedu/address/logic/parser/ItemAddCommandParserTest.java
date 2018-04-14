@@ -24,7 +24,7 @@ public class ItemAddCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsItemAddCommand() {
-        assertParseSuccess(parser,"1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
+        assertParseSuccess(parser, "1 " + PREFIX_NAME + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
                 new ItemAddCommand(INDEX_FIRST_PERSON, VALID_ITEM_NAME, VALID_ITEM_VALUE));
     }
 
@@ -36,7 +36,7 @@ public class ItemAddCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
 
         // no prefix "n/"
-        assertParseFailure(parser, "1 " + VALID_ITEM_NAME +" " + PREFIX_MONEY + VALID_ITEM_VALUE,
+        assertParseFailure(parser, "1 " + VALID_ITEM_NAME + " " + PREFIX_MONEY + VALID_ITEM_VALUE,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ItemAddCommand.MESSAGE_USAGE));
 
         // no prefix "m/"
