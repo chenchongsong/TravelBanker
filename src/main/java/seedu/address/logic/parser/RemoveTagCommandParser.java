@@ -57,7 +57,8 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         assert tags != null;
 
         if (tags.isEmpty()) {
-            return Optional.empty();
+            throw new IllegalValueException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveTagCommand.MESSAGE_USAGE));
         }
         Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
         return Optional.of(ParserUtil.parseTags(tagSet));
