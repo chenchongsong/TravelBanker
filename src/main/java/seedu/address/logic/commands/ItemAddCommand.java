@@ -115,4 +115,12 @@ public class ItemAddCommand extends UndoableCommand {
         return appendedItemList;
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ItemAddCommand // instanceof handles nulls
+                && this.targetIndex.equals(((ItemAddCommand) other).targetIndex)
+                && this.item.equals(((ItemAddCommand) other).item)); // state check
+    }
+
 }
