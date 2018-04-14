@@ -8,10 +8,8 @@ public class CurrencyCommandTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        currencyCommand = new CurrencyCommand(INDEX_FIRST_PERSON,"USD", "SGD");
-
-
-}
+        currencyCommand = new CurrencyCommand(INDEX_FIRST_PERSON, "USD", "SGD");
+    }
 }
 ```
 ###### /java/seedu/address/logic/commands/WipeCommandTest.java
